@@ -61,7 +61,7 @@ $config['module']['gii'] = [
         'builder' => [
             'class' => Builder::class,
             'template' => [
-                'default' => '@vendor/andy87/builder/templates/default',
+                'default' => Builder::TEMPLATE,
             ]           
         ],
     ],
