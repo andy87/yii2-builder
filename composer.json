@@ -31,6 +31,7 @@
       "andy87\\yii2\\builder\\": "src/"
     }
   },
+
   "config": {
     "allow-plugins": {
       "yiisoft/yii2-composer" : true

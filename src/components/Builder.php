@@ -1,6 +1,6 @@
 <?php
 
-namespace andy87\yii2\architect\components;
+namespace andy87\yii2\builder\components;
 
 /**
  * Class Builder
