@@ -51,6 +51,7 @@ php composer.phar require andy87/yii2-builder
 
 В конфигурационном файле `config/web-local.php`/`frontend/config/main-local.php` настроить расширение gii:  
 `andy87\yii2\architect\components\controllers\ArchitectController`
+
 ```php
 use andy87\yii2\builder\components\Builder;
 
@@ -61,7 +62,7 @@ $config['module']['gii'] = [
         'builder' => [
             'class' => Builder::class,
             'template' => [
-                'default' => Builder::TEMPLATE,
+                'default' => Builder::VIEWS . '/ext',
             ]           
         ],
     ],
@@ -91,8 +92,7 @@ $config['module']['gii'] = [
  [\_] common/models/sources/<Item>Source  
  [\_] common/models/sources/<Item>  
  [\_] common/repository/<Item>Repository  
- [\_] common/service/<Item>Service*  
- [\_] common/models/<Item>  
+ [\_] common/service/<Item>Service  
  [\_] console/models/items/<Item>  
  [\_] console/repository/<Item>Repository  
  [\_] console/service/<Item>Service  
@@ -105,7 +105,6 @@ $config['module']['gii'] = [
  [\_] backend/views/<Item>/update  
  [\_] backend/views/<Item>/view  
  [\_] backend/views/<Item>/_form  
- [\_] backend/views/<Item>/_search  
  [\_] backend/resources/<Item>/<Item>ListResources  
  [\_] backend/resources/<Item>/<Item>CreateResources  
  [\_] backend/resources/<Item>/<Item>UpdateResources  
