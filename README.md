@@ -70,53 +70,53 @@ $config['module']['gii'] = [
 
 ## Использование <span id="yii2-builder-use"></span>
 
-Для использования расширения необходимо перейти в раздел `Gii` и выбрать генератор `Builder`.
+Для использования расширения необходимо перейти в раздел `Gii` и выбрать генератор `Builder`.  
 
-В разделе `Builder` доступно:
-1. Описать новую сущность системы
-2. Редактировать существующую сущность
+В разделе `Builder` доступно:  
+1. Описать новую сущность системы  
+2. Редактировать существующую сущность  
 
-При создании/редактировании сущности доступно:
-* Название сущности
-* Описание сущности
+При создании/редактировании сущности доступно:  
+* Название сущности  
+* Описание сущности  
 * **Настройка полей сущности**  
- [_] Название поля  
- [_] Комментарий  
- [_] тип поля (string, integer, text, date, datetime, time, boolean, float)  
- [_] длина поля  
- [_] значение по умолчанию   
- [_] required   
- [_] foreignKey   
+ [\_] Название поля  
+ [\_] Комментарий  
+ [\_] тип поля (string, integer, text, date, datetime, time, boolean, float)  
+ [\_] длина поля  
+ [\_] значение по умолчанию  
+ [\_] required  
+ [\_] foreignKey  
 * **Настройка фильтра генерации файлов**  
- [_] common/models/sources/<Item>Source  
- [_] common/models/sources/<Item>  
- [_] common/repository/<Item>Repository  
- [_] common/service/<Item>Service*  
- [_] common/models/
- [_] console/models/items/<Item>  
- [_] console/repository/<Item>Repository  
- [_] console/service/<Item>Service  
- [_] backend/models/items/<Item>  
- [_] backend/repository/<Item>Repository  
- [_] backend/service/<Item>Service  
- [_] backend/controllers/<Item>Controller  
- [_] backend/views/<Item>/list  
- [_] backend/views/<Item>/create  
- [_] backend/views/<Item>/update  
- [_] backend/views/<Item>/view  
- [_] backend/views/<Item>/_form  
- [_] backend/views/<Item>/_search  
- [_] backend/resources/<Item>/<Item>ListResources  
- [_] backend/resources/<Item>/<Item>CreateResources  
- [_] backend/resources/<Item>/<Item>UpdateResources  
- [_] backend/resources/<Item>/<Item>ViewResources
- [_] frontend/models/items/<Item>  
- [_] frontend/repository/<Item>Repository  
- [_] frontend/service/<Item>Service  
- [_] frontend/controllers/<Item>Controller
- [_] frontend/resources/<Item>/<Item>ListResources  
- [_] frontend/resources/<Item>/<Item>ViewResources  
- [_] frontend/views/<Item>/list  
- [_] frontend/views/<Item>/view
+ [\_] common/models/sources/<Item>Source  
+ [\_] common/models/sources/<Item>  
+ [\_] common/repository/<Item>Repository  
+ [\_] common/service/<Item>Service*  
+ [\_] common/models/<Item>  
+ [\_] console/models/items/<Item>  
+ [\_] console/repository/<Item>Repository  
+ [\_] console/service/<Item>Service  
+ [\_] backend/models/items/<Item>  
+ [\_] backend/repository/<Item>Repository  
+ [\_] backend/service/<Item>Service  
+ [\_] backend/controllers/<Item>Controller  
+ [\_] backend/views/<Item>/list  
+ [\_] backend/views/<Item>/create  
+ [\_] backend/views/<Item>/update  
+ [\_] backend/views/<Item>/view  
+ [\_] backend/views/<Item>/_form  
+ [\_] backend/views/<Item>/_search  
+ [\_] backend/resources/<Item>/<Item>ListResources  
+ [\_] backend/resources/<Item>/<Item>CreateResources  
+ [\_] backend/resources/<Item>/<Item>UpdateResources  
+ [\_] backend/resources/<Item>/<Item>ViewResources  
+ [\_] frontend/models/items/<Item>  
+ [\_] frontend/repository/<Item>Repository  
+ [\_] frontend/service/<Item>Service  
+ [\_] frontend/controllers/<Item>Controller  
+ [\_] frontend/resources/<Item>/<Item>ListResources  
+ [\_] frontend/resources/<Item>/<Item>ViewResources  
+ [\_] frontend/views/<Item>/list  
+ [\_] frontend/views/<Item>/view  
 
 [Packagist](https://packagist.org/packages/andy87/yii2-builder)

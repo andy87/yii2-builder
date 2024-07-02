@@ -9,6 +9,7 @@ namespace andy87\yii2\builder\components;
  */
 class Builder extends \yii\gii\Generator
 {
+    public const ID = 'build';
     public const TEMPLATE = '@vendor/andy87/builder/templates/default';
 
     public function getName(): string
