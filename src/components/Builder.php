@@ -19,7 +19,7 @@ class Builder extends \yii\gii\Generator
 
     public function getDescription(): string
     {
-        return 'Мой crud-генератор. Такой же как и дефолтный, но зато мой...';
+        return 'Yii2 Builder - расширение для модуля Gii в фреймворке Yii2 упрощающее генерацию файлов';
     }
 
     public function generate(): string
