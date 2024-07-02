@@ -1,5 +1,5 @@
 {
-  "name": "andy87/builder",
+  "name": "andy87/yii2-builder",
   "description": "PHP library for Yii2 - developed by and_y87",
   "keywords": ["and_y87", "php", "generator", "builder"],
   "homepage": "https://andy87.ru",
@@ -28,7 +28,7 @@
 
   "autoload": {
     "psr-4": {
-      "andy87\\yii2\\architect\\": "src/"
+      "andy87\\yii2\\builder\\": "src/"
     }
   },
   "config": {
