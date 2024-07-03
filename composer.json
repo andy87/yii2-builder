@@ -23,6 +23,7 @@
 
   "require-dev": {
     "yiisoft/yii2-gii": "~2.2.0",
+    "yiisoft/yii2-bootstrap5": "~2.0.2",
     "phpunit/phpunit": "~9.5.0"
   },
 
