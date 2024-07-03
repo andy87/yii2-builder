@@ -2,6 +2,7 @@
 
 namespace andy87\yii2\builder\components\models;
 
+use andy87\yii2\builder\components\helpers\Library;
 use yii\base\Model;
 
 /**
@@ -13,8 +14,8 @@ use yii\base\Model;
  */
 class FileForm extends Model
 {
-    /** @var string ID */
-    public string $id;
+    /** @var int ID */
+    public int $id = Library::COMMON_MODEL_SOURCES;
 
     /** @var bool Toggle for skip generate file */
     public bool $skip = false;

@@ -1,8 +1,9 @@
 <?php
 
-namespace andy87\yii2\builder\components\models;
+namespace andy87\yii2\builder\components\models\collections;
 
 use yii\base\Model;
+use andy87\yii2\builder\components\models\TableForm;
 
 /**
  * Class `TableForm`

@@ -86,33 +86,55 @@ $config['modules']['gii'] = [
  [\_] required  
  [\_] foreignKey  
 * **Настройка фильтра генерации файлов**  
- [\_] common/models/sources/<Item>Source  
- [\_] common/models/sources/<Item>  
- [\_] common/repository/<Item>Repository  
- [\_] common/service/<Item>Service  
- [\_] console/models/items/<Item>  
- [\_] console/repository/<Item>Repository  
- [\_] console/service/<Item>Service  
- [\_] backend/models/items/<Item>  
- [\_] backend/repository/<Item>Repository  
- [\_] backend/service/<Item>Service  
- [\_] backend/controllers/<Item>Controller  
- [\_] backend/views/<Item>/list  
- [\_] backend/views/<Item>/create  
- [\_] backend/views/<Item>/update  
- [\_] backend/views/<Item>/view  
- [\_] backend/views/<Item>/_form  
- [\_] backend/resources/<Item>/<Item>ListResources  
- [\_] backend/resources/<Item>/<Item>CreateResources  
- [\_] backend/resources/<Item>/<Item>UpdateResources  
- [\_] backend/resources/<Item>/<Item>ViewResources  
- [\_] frontend/models/items/<Item>  
- [\_] frontend/repository/<Item>Repository  
- [\_] frontend/service/<Item>Service  
- [\_] frontend/controllers/<Item>Controller  
- [\_] frontend/resources/<Item>/<Item>ListResources  
- [\_] frontend/resources/<Item>/<Item>ViewResources  
- [\_] frontend/views/<Item>/list  
- [\_] frontend/views/<Item>/view  
+```
+ [_] common/
+     [_] models/sources/{{PascalCase}}Source
+     [_] models/sources/{{PascalCase}}
+     [_] repository/{{PascalCase}}Repository
+     [_] service/{{PascalCase}}Service
+     [_] tests/unit/services/{{PascalCase}}Service  
+ 
+ [_] console/
+     [_] models/items/{{PascalCase}}  
+     [_] repository/{{PascalCase}}Repository  
+     [_] service/{{PascalCase}}Service  
+ 
+ [_] backend/
+     [_] models/items/{{PascalCase}}  
+     [_] repository/{{PascalCase}}Repository  
+     [_] service/{{PascalCase}}Service  
+     [_] controllers/{{PascalCase}}Controller  
+     [_] views/{{kebab-case}}/
+         [_] list  
+         [_] create  
+         [_] update  
+         [_] view  
+         [_] _form  
+     [_] resources/{{kebab-case}}/
+         [_] {{PascalCase}}ListResources  
+         [_] {{PascalCase}}CreateResources  
+         [_] {{PascalCase}}UpdateResources  
+         [_] {{PascalCase}}ViewResources  
+     [_] tests/
+         [_] service/{{PascalCase}}ServiceTest  
+         [_] functional/{{PascalCase}}Cest  
+         [_] unit/service/{{PascalCase}}ServiceTest
+ 
+ [_] frontend/
+     [_] models/items/{{PascalCase}}  
+     [_] repository/{{PascalCase}}Repository  
+     [_] service/{{PascalCase}}Service  
+     [_] controllers/{{PascalCase}}Controller  
+     [_] resources/{{kebab-case}}/
+         [_] <Item>ListResources  
+         [_] <Item>ViewResources  
+     [_] views/{{kebab-case}}/
+         [_] list  
+         [_] view  
+     [_] tests/
+         [_] service/{{PascalCase}}ServiceTest  
+         [_] functional/{{PascalCase}}Cest  
+         [_] unit/service/{{PascalCase}}ServiceTest  
+``` 
 
 [Packagist](https://packagist.org/packages/andy87/yii2-builder)

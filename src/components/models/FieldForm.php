@@ -13,8 +13,10 @@ use yii\base\Model;
  */
 class FieldForm extends Model
 {
+    private const NEW = '0';
+
     /** @var string Column name */
-    public string $name;
+    public string $name = self::NEW;
 
     /** @var string  */
     public string $comment;

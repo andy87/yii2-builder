@@ -2,6 +2,8 @@
 
 namespace andy87\yii2\builder\components\models;
 
+use andy87\yii2\builder\components\models\collections\CollectionFieldForm;
+use andy87\yii2\builder\components\models\collections\CollectionFileForm;
 use yii\base\Model;
 
 /**
@@ -28,8 +30,8 @@ class TableForm extends Model
 
     public const ATTR_SINGLE = 'rusSingular';
     public const ATTR_PLURAL = 'rusPlural';
-    public const ATTR_FIELDS = 'fields';
-    public const ATTR_FILES = 'files';
+    public const ATTR_FIELDS = 'collectionFieldForm';
+    public const ATTR_FILES = 'collectionFileForm';
 
     public const ACTION_ADD = 'add';
     public const ACTION_UPDATE = 'update';
@@ -54,11 +56,11 @@ class TableForm extends Model
     public ?string $rusPlural = null;
 
 
-    /** @var FieldForm[] */
-    public array $fields = [];
+    /** @var ?CollectionFieldForm */
+    public ?CollectionFieldForm $collectionFieldForm = null;
 
-    /** @var FileForm[] */
-    public array $files = [];
+    /** @var ?CollectionFileForm */
+    public ?CollectionFileForm $collectionFileForm = null;
 
 
     public function init(): void

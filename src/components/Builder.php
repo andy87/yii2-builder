@@ -4,7 +4,7 @@ namespace andy87\yii2\builder\components;
 
 use Yii;
 use yii\gii\Generator;
-use andy87\yii2\builder\components\models\{ActionsForm, CollectionTableForm, TableForm, FileSettings};
+use andy87\yii2\builder\components\models\{ TableForm, FileSettings, collections\CollectionTableForm };
 
 /**
  * Class Builder
@@ -43,8 +43,6 @@ class Builder extends Generator
 
     /** @var TableForm */
     public TableForm $tableForm;
-
-    private string $mode = self::VIEWS . '/clear';
 
 
 
@@ -305,45 +303,5 @@ class Builder extends Generator
         $path = $this->cacheFilePath($name);
 
         if ( file_exists($path) ) unlink($path);
-    }
-
-    /**
-     * @return ActionsForm
-     */
-    private function getModelActionsForm(): ActionsForm
-    {
-        return new ActionsForm();
-    }
-
-    /**
-     * @param ActionsForm $actionsForm
-     * @return void
-     */
-    private function actionsHandler(ActionsForm $actionsForm): void
-    {
-        if ( $actionsForm->remove )
-        {
-            $this->removeCacheTableForm($actionsForm->remove);
-        }
-    }
-
-    /**
-     * @return void
-     */
-    private function clearCache(): void
-    {
-        $cacheDir = $this->getCacheDir();
-
-        $files = glob($cacheDir . '*.' . self::CACHE_EXT );
-
-        foreach ($files as $path)
-        {
-            if (in_array($path,['.','..']) ) continue;
-
-            if ( is_file($path) )
-            {
-                unlink($path);
-            }
-        }
     }
 }
