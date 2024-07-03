@@ -55,18 +55,15 @@ php composer.phar require andy87/yii2-builder
 ```php
 use andy87\yii2\builder\components\Builder;
 
-$config['module']['gii'] = [
-    'class' => 'yii\gii\Module',
-    'allowedIPs' => ['127.0.0.1', '::1'],
-    'generators' => [
-        'builder' => [
-            'class' => Builder::class,
-            'template' => [
-                'default' => Builder::VIEWS . '/ext',
-            ]           
-        ],
-    ],
-];
+$config['modules']['gii'] = [
+        'class' => yii\gii\Module::class,
+        'generators' => [
+            Builder::ID => [
+                'class' => Builder::class,
+                'pathCache' => '@frontend/runtime/cache-yii2-builder/',
+            ]
+        ]
+    ];
 ```
 
 ## Использование <span id="yii2-builder-use"></span>
