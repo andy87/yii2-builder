@@ -8,7 +8,7 @@ use yii\web\View;
  * @var TableForm $tableForm
  */
 
-echo $this->render('form', [
+echo $this->render('_form/form', [
     'tableForm' => $tableForm
 ]);
 

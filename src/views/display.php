@@ -13,7 +13,7 @@ use andy87\yii2\builder\components\Builder;
 YiiAsset::register($this);
 BootstrapAsset::register($this);
 
-echo $this->render('form', [
+echo $this->render('_form/form', [
     'tableForm' => $generator->tableForm
 ]);
 
