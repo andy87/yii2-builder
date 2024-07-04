@@ -21,16 +21,18 @@ use andy87\yii2\builder\components\models\TableForm;
             <th>Path</th>
         </thead>
         <tbody>
-            <?php foreach ($tableForm->collectionFileForm->groups as $fileForm): ?>
-                <tr>
-                    <td>
-                        <input type="checkbox" name="files[]" value="<?= $fileForm->id ?>"/>
-                    </td>
-                    <td>
-                        <?= $fileForm->path ?>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
+            <?php if ($tableForm->collectionFieldForm): ?>
+                <?php foreach ($tableForm->collectionFileForm->groups as $fileForm): ?>
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="files[]" value="<?= $fileForm->id ?>"/>
+                        </td>
+                        <td>
+                            <?= $fileForm->path ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </tbody>
     </table>
 </div>

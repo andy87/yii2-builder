@@ -24,9 +24,11 @@ use andy87\yii2\builder\components\models\TableForm;
             <th>foreignKey</th>
         </thead>
         <tbody>
-            <?php foreach ($tableForm->collectionFieldForm as $fieldForm): ?>
+            <?php if ($tableForm->collectionFieldForm): ?>
+                <?php foreach ($tableForm->collectionFieldForm as $fieldForm): ?>
 
-            <?php endforeach; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </tbody>
     </table>
 </div>

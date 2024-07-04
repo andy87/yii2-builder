@@ -38,7 +38,7 @@ class Builder extends Generator
     /** @var FileSettings[] Collection settings for generation */
     public array $config = [];
 
-    /** @var TableForm[] Collection TableForm */
+    /** @var CollectionTableForm[] Collection TableForm */
     public array $collectionTableForm = [];
 
     /** @var TableForm */
