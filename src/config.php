@@ -32,7 +32,12 @@ return [
     Library::CONSOLE_MODEL => new FileSettings(
         NameCase::PASCAL . '.php',
         '@console/models/items/',
-        '/console/model.php'
+        '/console/model/item.php'
+    ),
+    Library::CONSOLE_MODEL_FORM => new FileSettings(
+        NameCase::PASCAL . 'Form.php',
+        '@console/models/forms/',
+        '/console/model/form.php'
     ),
     Library::CONSOLE_REPOSITORY => new FileSettings(
         NameCase::PASCAL . 'Repository.php',
@@ -48,7 +53,17 @@ return [
     Library::FRONTEND_MODEL => new FileSettings(
         NameCase::PASCAL . '.php',
         '@frontend/models/items/',
-        '/frontend/model.php'
+        '/frontend/models/item.php'
+    ),
+    Library::FRONTEND_MODEL_FORM => new FileSettings(
+        NameCase::PASCAL . 'Form.php',
+        '@frontend/models/forms/',
+        '/frontend/models/form.php'
+    ),
+    Library::FRONTEND_MODEL_SEARCH => new FileSettings(
+        NameCase::PASCAL . 'Search.php',
+        '@frontend/models/search/',
+        '/frontend/models/search.php'
     ),
     Library::FRONTEND_REPOSITORY => new FileSettings(
         NameCase::PASCAL . 'Repository.php',
@@ -89,7 +104,17 @@ return [
     Library::BACKEND_MODEL => new FileSettings(
         NameCase::PASCAL . '.php',
         '@backend/models/items/',
-        '/frontend/model.php'
+        '/frontend/models/item.php'
+    ),
+    Library::BACKEND_MODEL_FORM => new FileSettings(
+        NameCase::PASCAL . 'Form.php',
+        '@backend/models/forms/',
+        '/frontend/models/form.php'
+    ),
+    Library::BACKEND_MODEL_SEARCH => new FileSettings(
+        NameCase::PASCAL . 'Search.php',
+        '@backend/models/search/',
+        '/frontend/models/search.php'
     ),
     Library::BACKEND_REPOSITORY => new FileSettings(
         NameCase::PASCAL . 'Repository.php',

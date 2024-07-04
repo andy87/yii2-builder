@@ -20,19 +20,25 @@ abstract class Library
 
     /** @var int console/models/items/{{PascalCase}} */
     public const CONSOLE_MODEL = 11;
+    /** @var int console/models/items/{{PascalCase}} */
+    public const CONSOLE_MODEL_FORM = 12;
     /** @var int console/repositories/{{PascalCase}}Repository */
-    public const CONSOLE_REPOSITORY = 12;
+    public const CONSOLE_REPOSITORY = 13;
     /** @var int console/services/{{PascalCase}}Service */
-    public const CONSOLE_SERVICE = 13;
+    public const CONSOLE_SERVICE = 14;
 
-    /** @var int backend/models/{{PascalCase}} */
+    /** @var int backend/models/items/{{PascalCase}} */
     public const BACKEND_MODEL = 21;
+    /** @var int backend/models/forms/{{PascalCase}}Form */
+    public const BACKEND_MODEL_FORM = 22;
+    /** @var int backend/models/search/{{PascalCase}}Search */
+    public const BACKEND_MODEL_SEARCH = 23;
     /** @var int backend/repositories/{{PascalCase}}Repository */
-    public const BACKEND_REPOSITORY = 22;
+    public const BACKEND_REPOSITORY = 24;
     /** @var int backend/services/{{PascalCase}}Service */
-    public const BACKEND_SERVICE = 23;
+    public const BACKEND_SERVICE = 25;
     /** @var int backend/controllers/{{PascalCase}}Controller */
-    public const BACKEND_CONTROLLER = 24;
+    public const BACKEND_CONTROLLER = 26;
     /** @var int backend/tpl/{{kebab-case}}-list */
     public const BACKEND_TPL_LIST = 30;
     /** @var int backend/tpl/{{kebab-case}}-iew */
@@ -56,12 +62,18 @@ abstract class Library
 
     /** @var int frontend/models/{{PascalCase}} */
     public const FRONTEND_MODEL = 51;
+
+    /** @var int frontend/models/{{PascalCase}}Search */
+    public const FRONTEND_MODEL_SEARCH = 52;
+
+    /** @var int frontend/models/{{PascalCase}}Form */
+    public const FRONTEND_MODEL_FORM = 53;
     /** @var int frontend/repositories/{{PascalCase}}Repository */
-    public const FRONTEND_REPOSITORY = 52;
+    public const FRONTEND_REPOSITORY = 54;
     /** @var int frontend/services/{{PascalCase}}Service */
-    public const FRONTEND_SERVICE = 53;
+    public const FRONTEND_SERVICE = 55;
     /** @var int frontend/controllers/{{PascalCase}}Controller */
-    public const FRONTEND_CONTROLLER = 54;
+    public const FRONTEND_CONTROLLER = 56;
     /** @var int frontend/tpl/{{kebab-case}}-list */
     public const FRONTEND_TPL_LIST = 60;
     /** @var int frontend/tpl/{{kebab-case}}-view */
