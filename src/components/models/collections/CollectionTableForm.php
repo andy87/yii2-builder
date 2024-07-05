@@ -21,10 +21,10 @@ use andy87\yii2\builder\components\models\TableForm;
  */
 class CollectionTableForm extends Model
 {
-    public const ATTR_GROUPS = 'groups';
+    public const ATTR_TABLE_FORMS = 'tableForms';
 
     /** @var TableForm[] */
-    public array $groups = [];
+    public array $tableForms = [];
 
     /**
      * @return array
@@ -32,7 +32,7 @@ class CollectionTableForm extends Model
     public function rules(): array
     {
         return [
-            [ [ self::ATTR_GROUPS], 'each', 'rule' => [ 'class', TableForm::class ] ]
+            [ [ self::ATTR_TABLE_FORMS], 'each', 'rule' => [ 'class', TableForm::class ] ]
         ];
     }
 
@@ -46,6 +46,6 @@ class CollectionTableForm extends Model
      */
     public static function attrName(TableForm $tableForm, string $attr ): string
     {
-        return "CollectionTableForm[groups][$tableForm->id][$attr]";
+        return "CollectionTableForm[". self::ATTR_TABLE_FORMS ."][$tableForm->id][$attr]";
     }
 }

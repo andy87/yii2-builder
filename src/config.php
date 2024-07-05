@@ -28,7 +28,6 @@ return [
         '@common/services/',
         '/common/service.php'
     ),
-
     Library::CONSOLE_MODEL => new FileSettings(
         NameCase::PASCAL . '.php',
         '@console/models/items/',
@@ -49,7 +48,11 @@ return [
         '@console/services/',
         '/console/service.php'
     ),
-
+    Library::CONSOLE_MIGRATE => new FileSettings(
+        'm_date_time__create_table__' . NameCase::SNAKE . '.php',
+        '@console/migration/',
+        '/console/migration.php'
+    ),
     Library::FRONTEND_MODEL => new FileSettings(
         NameCase::PASCAL . '.php',
         '@frontend/models/items/',

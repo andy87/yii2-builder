@@ -26,6 +26,8 @@ abstract class Library
     public const CONSOLE_REPOSITORY = 13;
     /** @var int console/services/{{PascalCase}}Service */
     public const CONSOLE_SERVICE = 14;
+    /** @var int console/migration/m_date_time__create_table__{{snake_case}} */
+    public const CONSOLE_MIGRATE = 15;
 
     /** @var int backend/models/items/{{PascalCase}} */
     public const BACKEND_MODEL = 21;

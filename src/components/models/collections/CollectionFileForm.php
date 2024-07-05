@@ -22,10 +22,10 @@ use andy87\yii2\builder\components\models\FileForm;
 class CollectionFileForm extends Model
 {
     /** @var string  */
-    public const ATTR_GROUPS = 'groups';
+    public const ATTR_FILE_FORMS = 'fileForms';
 
     /** @var FileForm[] */
-    public array $groups = [];
+    public array $fileForms = [];
 
     /**
      * @return array
@@ -33,7 +33,7 @@ class CollectionFileForm extends Model
     public function rules(): array
     {
         return [
-            [ [ self::ATTR_GROUPS], 'each', 'rule' => [ 'class', FileForm::class ] ]
+            [ [ self::ATTR_FILE_FORMS], 'each', 'rule' => [ 'class', FileForm::class ] ]
         ];
     }
 

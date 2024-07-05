@@ -4,7 +4,12 @@ namespace andy87\yii2\builder\components;
 
 use Yii;
 use yii\gii\Generator;
-use andy87\yii2\builder\components\models\{ TableForm, FileSettings, collections\CollectionTableForm };
+use andy87\yii2\builder\components\models\{collections\CollectionFieldForm,
+    collections\CollectionFileForm,
+    FieldForm,
+    TableForm,
+    FileSettings,
+    collections\CollectionTableForm};
 
 /**
  * Class Builder
@@ -208,13 +213,19 @@ class Builder extends Generator
 
         if ( $request->isPost )
         {
-            $collectionTableForm = new CollectionTableForm();
-            $collectionTableForm->load($request->post());
+            $post = $request->post();
 
-            if ( count($collectionTableForm->groups) )
+            $collectionTableForm = new CollectionTableForm();
+            $collectionTableForm->load($post);
+
+            if ( count($collectionTableForm->{CollectionTableForm::ATTR_TABLE_FORMS}) )
             {
-                foreach ( $collectionTableForm->groups as $tableForm )
+                foreach ( $collectionTableForm->{CollectionTableForm::ATTR_TABLE_FORMS} as $tableForm )
                 {
+                    if( !isset($tableForm['action']) ) continue;
+
+                    $tableForm[TableForm::ATTR_FIELDS] = $this->prepareCollectionFieldForm($tableForm);
+                    $tableForm[TableForm::ATTR_FILES] = $this->prepareCollectionFileForm($tableForm);
                     $tableForm = new TableForm($tableForm);
 
                     switch ($tableForm->action)
@@ -303,5 +314,52 @@ class Builder extends Generator
         $path = $this->cacheFilePath($name);
 
         if ( file_exists($path) ) unlink($path);
+    }
+
+    /**
+     * @param mixed $tableForm
+     *
+     * @return CollectionFieldForm
+     */
+    private function prepareCollectionFieldForm(mixed $tableForm): CollectionFieldForm
+    {
+        $collectionFieldForm = [];
+
+        if ( count($tableForm[TableForm::ATTR_FIELDS]) )
+        {
+            foreach ( $tableForm[TableForm::ATTR_FIELDS] as $key => $postFieldForm )
+            {
+                if ( $key == 0 ) continue;
+
+                $fieldForm = new FieldForm();
+                $fieldForm->load($postFieldForm);
+
+                if ( $fieldForm->validate() ){
+
+                    $collectionFieldForm[] = $fieldForm;
+                } else {
+                    echo '<pre>';
+                    print_r(['$fieldForm->errors' => $fieldForm->errors]);
+                    echo '</pre>';
+                    exit();
+                }
+            }
+        }
+
+        return new CollectionFieldForm([
+            CollectionFieldForm::ATTR_FIELDS_FORMS => $collectionFieldForm
+        ]);
+    }
+
+    /**
+     * @param mixed $tableForm
+     *
+     * @return CollectionFileForm
+     */
+    private function prepareCollectionFileForm(mixed $tableForm): CollectionFileForm
+    {
+        return new CollectionFileForm([
+            CollectionFileForm::ATTR_FILE_FORMS => []
+        ]);
     }
 }

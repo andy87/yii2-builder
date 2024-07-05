@@ -19,7 +19,7 @@ $naming = [
 
 ?>
 
-<div class ="form">
+<div class="form" data-template="<?= __FILE__ ?>">
     <div class="row">
         <?php if ( $tableForm->id === $tableForm::NEW ): ?>
             <div class="col-5">

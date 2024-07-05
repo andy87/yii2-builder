@@ -10,9 +10,8 @@ use andy87\yii2\builder\components\models\TableForm;
 
 ?>
 
-<div class="row">
+<div class="row" data-template="<?= __FILE__ ?>">
 
-    <?= __FILE__ ?>
     <table class="table">
         <thead>
             <th>
@@ -21,8 +20,8 @@ use andy87\yii2\builder\components\models\TableForm;
             <th>Path</th>
         </thead>
         <tbody>
-            <?php if ($tableForm->collectionFieldForm): ?>
-                <?php foreach ($tableForm->collectionFileForm->groups as $fileForm): ?>
+            <?php if ($tableForm->collectionFileForm): ?>
+                <?php foreach ($tableForm->collectionFileForm->fileForms as $fileForm): ?>
                     <tr>
                         <td>
                             <input type="checkbox" name="files[]" value="<?= $fileForm->id ?>"/>
@@ -36,10 +35,3 @@ use andy87\yii2\builder\components\models\TableForm;
         </tbody>
     </table>
 </div>
-
-<script>
-    document.querySelector('input[name="checkAll"]').addEventListener('change', function () {
-        const checkboxes = document.querySelectorAll('input[name="files[]"]');
-        checkboxes.forEach(checkbox => checkbox.checked = this.checked);
-    });
-</script>

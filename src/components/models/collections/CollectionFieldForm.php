@@ -2,6 +2,7 @@
 
 namespace andy87\yii2\builder\components\models\collections;
 
+use andy87\yii2\builder\components\models\TableForm;
 use yii\base\Model;
 use andy87\yii2\builder\components\models\FieldForm;
 
@@ -21,10 +22,10 @@ use andy87\yii2\builder\components\models\FieldForm;
  */
 class CollectionFieldForm extends Model
 {
-    public const ATTR_GROUPS = 'groups';
+    public const ATTR_FIELDS_FORMS = 'fieldForms';
 
     /** @var FieldForm[] */
-    public array $groups = [];
+    public array $fieldForms = [];
 
     /**
      * @return array
@@ -32,20 +33,21 @@ class CollectionFieldForm extends Model
     public function rules(): array
     {
         return [
-            [ [ self::ATTR_GROUPS], 'each', 'rule' => [ 'class', FieldForm::class ] ]
+            [ [ self::ATTR_FIELDS_FORMS], 'each', 'rule' => [ 'class', FieldForm::class ] ]
         ];
     }
 
     /**
-     * Generate name like
-     *
-     * @param FieldForm $fieldForm
+     * @param TableForm $tableForm
      * @param string $attr
+     * @param ?FieldForm $fieldForm
      *
      * @return string
      */
-    public static function attrName(FieldForm $fieldForm, string $attr ): string
+    public static function attrName(TableForm $tableForm, string $attr, ?FieldForm $fieldForm = null ): string
     {
-        return "CollectionTableForm[groups][$fieldForm->name][$attr]";
+        $id = ($fieldForm) ? $fieldForm->id : FieldForm::NEW;
+
+        return "CollectionTableForm[tableForms][$tableForm->id][collectionFieldForm][$id][$attr]";
     }
 }
