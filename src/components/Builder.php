@@ -52,9 +52,9 @@ class Builder extends Generator
     /** @var TableForm */
     public TableForm $tableForm;
 
-    private FormService $formService;
-    private CacheService $cacheService;
-    private AccordionService $accordionService;
+    public FormService $formService;
+    public CacheService $cacheService;
+    public AccordionService $accordionService;
 
 
 
@@ -72,6 +72,8 @@ class Builder extends Generator
         $this->formService = new FormService($this->cacheService);
 
         $this->accordionService = new AccordionService(self::VIEWS);
+
+        $this->run();
     }
 
 

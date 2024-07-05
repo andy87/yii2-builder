@@ -1,0 +1,7 @@
+
+#builder-generator > .row,
+#builder-generator > .row > #form-fields {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+}
