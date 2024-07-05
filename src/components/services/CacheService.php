@@ -64,6 +64,16 @@ class CacheService
     }
 
     /**
+     * @param string $fileName
+     *
+     * @return string
+     */
+    public function filePath( string $fileName): string
+    {
+        return $this->getDir() . "$fileName." . $this->extension;
+    }
+
+    /**
      * @param TableForm $tableForm
      *
      * @return void

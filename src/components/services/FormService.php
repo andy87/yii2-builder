@@ -131,7 +131,7 @@ class FormService
     {
         $tableForm->id = $tableForm->tableName;
 
-        $path = $this->cacheFilePath($tableForm->tableName);
+        $path = $this->cacheService->filePath($tableForm->tableName);
 
         $content = serialize($tableForm);
 
@@ -151,22 +151,11 @@ class FormService
 
         $content = serialize($tableForm);
 
-        $path = $this->cacheFilePath($tableForm->tableName);
+        $path = $this->cacheService->filePath($tableForm->tableName);
 
         (bool) file_put_contents($path, $content);
     }
 
-    /**
-     * @param string $name
-     *
-     * @return string
-     */
-    private function cacheFilePath( string $name ): string
-    {
-        $cacheDir = $this->getCacheDir();
-
-        return $cacheDir . "$name." . self::CACHE_EXT;
-    }
 
     /**
      * @param string $name
@@ -175,7 +164,7 @@ class FormService
      */
     private function removeCacheTableForm(string $name): void
     {
-        $path = $this->cacheFilePath($name);
+        $path = $this->cacheService->filePath($name);
 
         if ( file_exists($path) ) unlink($path);
     }
