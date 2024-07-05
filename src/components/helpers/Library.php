@@ -18,6 +18,8 @@ abstract class Library
     /** @var int common/services/{{PascalCase}}Service */
     public const COMMON_SERVICE = 3;
 
+
+
     /** @var int console/models/items/{{PascalCase}} */
     public const CONSOLE_MODEL = 11;
     /** @var int console/models/items/{{PascalCase}} */
@@ -26,8 +28,11 @@ abstract class Library
     public const CONSOLE_REPOSITORY = 13;
     /** @var int console/services/{{PascalCase}}Service */
     public const CONSOLE_SERVICE = 14;
+
     /** @var int console/migration/m_date_time__create_table__{{snake_case}} */
     public const CONSOLE_MIGRATE = 15;
+
+
 
     /** @var int backend/models/items/{{PascalCase}} */
     public const BACKEND_MODEL = 21;
@@ -43,7 +48,7 @@ abstract class Library
     public const BACKEND_CONTROLLER = 26;
     /** @var int backend/tpl/{{kebab-case}}-list */
     public const BACKEND_TPL_LIST = 30;
-    /** @var int backend/tpl/{{kebab-case}}-iew */
+    /** @var int backend/tpl/{{kebab-case}}-view */
     public const BACKEND_TPL_VIEW = 31;
     /** @var int backend/tpl/{{kebab-case}}-create */
     public const BACKEND_TPL_CREATE = 32;
@@ -61,6 +66,8 @@ abstract class Library
     public const BACKEND_RESOURCES_UPDATE = 44;
     /** @var int backend/resources/{{PascalCase}}Resource */
     public const BACKEND_RESOURCES_FORM = 45;
+
+
 
     /** @var int frontend/models/{{PascalCase}} */
     public const FRONTEND_MODEL = 51;
