@@ -46,8 +46,8 @@ class Builder extends Generator
     /** @var FileSettings[] Collection settings for generation */
     public array $config = [];
 
-    /** @var CollectionTableForm[] Collection TableForm */
-    public array $collectionTableForm = [];
+    /** @var CollectionTableForm Collection TableForm */
+    public CollectionTableForm $collectionTableForm;
 
     /** @var TableForm */
     public TableForm $tableForm;
@@ -128,7 +128,9 @@ class Builder extends Generator
 
         $this->formService->requestHandler();
 
-        $this->collectionTableForm = $this->cacheService->findTablesForm();
+        $this->collectionTableForm = new CollectionTableForm([
+            CollectionTableForm::ATTR_TABLE_FORMS => $this->cacheService->findTablesForm()
+        ]);
     }
 
     /**
@@ -136,8 +138,11 @@ class Builder extends Generator
      */
     private function updateConfig(): void
     {
-        $config = require Yii::getAlias(self::ROOT . '/config.php');
+        $this->config = require Yii::getAlias(self::ROOT . '/config.php');
 
-        $this->config = array_merge($config, $this->extension);
+        foreach ($this->extension as $key => $config)
+        {
+            $this->config[$key] = $config;
+        }
     }
 }

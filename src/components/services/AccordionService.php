@@ -2,6 +2,7 @@
 
 namespace andy87\yii2\builder\components\services;
 
+use andy87\yii2\builder\components\models\collections\CollectionTableForm;
 use andy87\yii2\builder\components\models\TableForm;
 use Yii;
 
@@ -10,15 +11,15 @@ class AccordionService
     public function __construct(private string $view){}
 
     /**
-     * @param $collectionTableForm
+     * @param CollectionTableForm $collectionTableForm
      *
      * @return array
      */
-    public function getAccordionItems($collectionTableForm): array
+    public function getAccordionItems(CollectionTableForm $collectionTableForm): array
     {
         $accordionItems = [];
 
-        foreach ( $collectionTableForm as $fileName => $tableForm )
+        foreach ( $collectionTableForm->tableForms as $fileName => $tableForm )
         {
             $accordionItems[] = [
                 'label' => $fileName,
