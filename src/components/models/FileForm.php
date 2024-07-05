@@ -14,9 +14,11 @@ use andy87\yii2\builder\components\helpers\Library;
  */
 class FileForm extends Model
 {
-    /** @var int ID */
-    public int $id = Library::COMMON_MODEL_SOURCES;
+    /** @var string|int ID */
+    public string|int $id = Library::COMMON_MODEL_SOURCES;
 
     /** @var bool Toggle for skip generate file */
     public bool $skip = false;
+
+    public string $path;
 }

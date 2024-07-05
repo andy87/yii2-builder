@@ -2,17 +2,10 @@
 
 namespace andy87\yii2\builder\components;
 
-use andy87\yii2\builder\components\services\AccordionService;
-use andy87\yii2\builder\components\services\CacheService;
-use andy87\yii2\builder\components\services\FormService;
 use Yii;
 use yii\gii\Generator;
-use andy87\yii2\builder\components\models\{collections\CollectionFieldForm,
-    collections\CollectionFileForm,
-    FieldForm,
-    TableForm,
-    FileSettings,
-    collections\CollectionTableForm};
+use andy87\yii2\builder\components\services\{ CacheService, FormService, AccordionService };
+use andy87\yii2\builder\components\models\{ TableForm, FileSettings, collections\CollectionTableForm };
 
 /**
  * Class Builder
@@ -124,7 +117,7 @@ class Builder extends Generator
     {
         $this->updateConfig();
 
-        $this->tableForm = $this->formService->getModelTableForm();
+        $this->tableForm = $this->formService->getBlankTableForm($this->config);
 
         $this->formService->requestHandler();
 
@@ -132,6 +125,7 @@ class Builder extends Generator
             CollectionTableForm::ATTR_TABLE_FORMS => $this->cacheService->findTablesForm()
         ]);
     }
+
 
     /**
      * @return void

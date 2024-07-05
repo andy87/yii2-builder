@@ -6,6 +6,8 @@ use andy87\yii2\builder\components\models\collections\CollectionFieldForm;
 use andy87\yii2\builder\components\models\collections\CollectionFileForm;
 use andy87\yii2\builder\components\models\collections\CollectionTableForm;
 use andy87\yii2\builder\components\models\FieldForm;
+use andy87\yii2\builder\components\models\FileForm;
+use andy87\yii2\builder\components\models\FileSettings;
 use andy87\yii2\builder\components\models\TableForm;
 use Yii;
 
@@ -25,6 +27,20 @@ class FormService
     public function getModelTableForm(): TableForm
     {
         return new TableForm();
+    }
+
+    /**
+     * @param array $config
+     *
+     * @return TableForm
+     */
+    public function getBlankTableForm( array $config ): TableForm
+    {
+        $tableForm = $this->getModelTableForm();
+
+        $tableForm->collectionFileForm = $this->getBlankCollectionFileForm($config);
+
+        return $tableForm;
     }
 
     /**
@@ -167,5 +183,37 @@ class FormService
         $path = $this->cacheService->filePath($name);
 
         if ( file_exists($path) ) unlink($path);
+    }
+
+    /**
+     * @param FileSettings[] $config
+     *
+     * @return CollectionFileForm
+     */
+    private function getBlankCollectionFileForm(array $config): CollectionFileForm
+    {
+        return new CollectionFileForm([
+            CollectionFileForm::ATTR_FILE_FORMS => $this->generateCollectionFileFormByFileSettings($config)
+        ]);
+    }
+
+    /**
+     * @param array $config
+     *
+     * @return FileForm[]
+     */
+    private function generateCollectionFileFormByFileSettings(array $config): array
+    {
+        $collectionFileForm = [];
+
+        foreach ($config as $file_id => $fileSettings )
+        {
+            $fileForm = new FileForm();
+            $fileForm->id = $file_id;
+            $fileForm->path = $fileSettings->dirFile . $fileSettings->fileName;
+            $collectionFileForm[] = $fileForm;
+        }
+
+        return $collectionFileForm;
     }
 }
