@@ -1,0 +1,43 @@
+<?php declare(strict_types=1);
+
+namespace andy87\yii2\builder\components\services;
+
+use andy87\yii2\builder\components\models\TableForm;
+use Yii;
+
+class AccordionService
+{
+    public function __construct(private string $view){}
+
+    /**
+     * @param $collectionTableForm
+     *
+     * @return array
+     */
+    public function getAccordionItems($collectionTableForm): array
+    {
+        $accordionItems = [];
+
+        foreach ( $collectionTableForm as $fileName => $tableForm )
+        {
+            $accordionItems[] = [
+                'label' => $fileName,
+                'content' => $this->renderAccordionItem($tableForm),
+            ];
+        }
+
+        return $accordionItems;
+    }
+
+    /**
+     * @param TableForm $tableForm
+     *
+     * @return string
+     */
+    private function renderAccordionItem(TableForm $tableForm): string
+    {
+        $templatePath = Yii::getAlias($this->view) . '/accordion-item.php';
+
+        return Yii::$app->view->renderFile( $templatePath, [ 'tableForm' => $tableForm ]);
+    }
+}

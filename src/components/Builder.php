@@ -2,6 +2,9 @@
 
 namespace andy87\yii2\builder\components;
 
+use andy87\yii2\builder\components\services\AccordionService;
+use andy87\yii2\builder\components\services\CacheService;
+use andy87\yii2\builder\components\services\FormService;
 use Yii;
 use yii\gii\Generator;
 use andy87\yii2\builder\components\models\{collections\CollectionFieldForm,
@@ -49,6 +52,10 @@ class Builder extends Generator
     /** @var TableForm */
     public TableForm $tableForm;
 
+    private FormService $formService;
+    private CacheService $cacheService;
+    private AccordionService $accordionService;
+
 
 
     /**
@@ -60,17 +67,11 @@ class Builder extends Generator
     {
         parent::init();
 
-        $this->updateConfig();
+        $this->cacheService = new CacheService( $this->pathCache, self::CACHE_EXT, );
 
-        $this->checkDir(
-            $this->getCacheDir()
-        );
+        $this->formService = new FormService($this->cacheService);
 
-        $this->tableForm = $this->getModelTableForm();
-
-        $this->requestHandler();
-
-        $this->collectionTableForm = $this->getCachedTablesForm();
+        $this->accordionService = new AccordionService(self::VIEWS);
     }
 
 
@@ -115,53 +116,17 @@ class Builder extends Generator
     }
 
     /**
-     * Return cache collection TableForm
-     *
-     * @return TableForm[]
-     */
-    public function getCachedTablesForm(): array
-    {
-        $cacheDir = $this->getCacheDir();
-
-        $files = glob($cacheDir . '*.' . self::CACHE_EXT );
-
-        $collectionTableForm = [];
-
-        foreach ($files as $path)
-        {
-            if (in_array($path,['.','..']) ) continue;
-
-            if ( is_file($path) )
-            {
-                $content = file_get_contents($path);
-
-                $fileName = pathinfo($path, PATHINFO_FILENAME);
-
-                $collectionTableForm[$fileName] = unserialize($content);
-            }
-        }
-
-        return $collectionTableForm;
-    }
-
-    /**
-     * @param string $dir
-     *
      * @return void
      */
-    private function checkDir(string $dir ): void
+    public function run(): void
     {
-        if (is_dir($dir)) return;
+        $this->updateConfig();
 
-        mkdir($dir, 0777, true);
-    }
+        $this->tableForm = $this->formService->getModelTableForm();
 
-    /**
-     * @return string
-     */
-    private function getCacheDir(): string
-    {
-        return Yii::getAlias($this->pathCache);
+        $this->formService->requestHandler();
+
+        $this->collectionTableForm = $this->cacheService->findTablesForm();
     }
 
     /**
@@ -172,194 +137,5 @@ class Builder extends Generator
         $config = require Yii::getAlias(self::ROOT . '/config.php');
 
         $this->config = array_merge($config, $this->extension);
-    }
-
-    /**
-     * @return array
-     */
-    public function getAccordionItems(): array
-    {
-        $accordionItems = [];
-
-        foreach ( $this->collectionTableForm as $fileName => $tableForm )
-        {
-            $accordionItems[] = [
-                'label' => $fileName,
-                'content' => $this->renderAccordionItem($tableForm),
-            ];
-        }
-
-        return $accordionItems;
-    }
-
-    /**
-     * @param TableForm $tableForm
-     *
-     * @return string
-     */
-    private function renderAccordionItem(TableForm $tableForm): string
-    {
-        $templatePath = Yii::getAlias(self::VIEWS) . '/accordion-item.php';
-
-        return Yii::$app->view->renderFile( $templatePath, [ 'tableForm' => $tableForm ]);
-    }
-
-    /**
-     * @return void
-     */
-    private function requestHandler(): void
-    {
-        $request = Yii::$app->request;
-
-        if ( $request->isPost )
-        {
-            $post = $request->post();
-
-            $collectionTableForm = new CollectionTableForm();
-            $collectionTableForm->load($post);
-
-            if ( count($collectionTableForm->{CollectionTableForm::ATTR_TABLE_FORMS}) )
-            {
-                foreach ( $collectionTableForm->{CollectionTableForm::ATTR_TABLE_FORMS} as $tableForm )
-                {
-                    if( !isset($tableForm['action']) ) continue;
-
-                    $tableForm[TableForm::ATTR_FIELDS] = $this->prepareCollectionFieldForm($tableForm);
-                    $tableForm[TableForm::ATTR_FILES] = $this->prepareCollectionFileForm($tableForm);
-                    $tableForm = new TableForm($tableForm);
-
-                    switch ($tableForm->action)
-                    {
-                        case TableForm::ACTION_ADD:
-                            $this->addCacheTableForm($tableForm);
-                            break;
-
-                        case TableForm::ACTION_UPDATE:
-                            $this->updateCacheTableForm($tableForm);
-                            break;
-
-                        case TableForm::ACTION_REMOVE:
-                            $this->removeCacheTableForm($tableForm->tableName);
-                            continue 2;
-
-                        default:
-                            continue 2;
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * @return TableForm
-     */
-    private function getModelTableForm(): TableForm
-    {
-        return new TableForm();
-    }
-
-    /**
-     * @param TableForm $tableForm
-     *
-     * @return void
-     */
-    private function addCacheTableForm(TableForm $tableForm): void
-    {
-        $tableForm->id = $tableForm->tableName;
-
-        $path = $this->cacheFilePath($tableForm->tableName);
-
-        $content = serialize($tableForm);
-
-        (bool)file_put_contents($path, $content);
-    }
-
-    /**
-     * @param TableForm $tableForm
-     *
-     * @return void
-     */
-    private function updateCacheTableForm(TableForm $tableForm): void
-    {
-        $this->removeCacheTableForm($tableForm->tableName);
-
-        $tableForm->id = $tableForm->tableName;
-
-        $content = serialize($tableForm);
-
-        $path = $this->cacheFilePath($tableForm->tableName);
-
-        (bool) file_put_contents($path, $content);
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return string
-     */
-    private function cacheFilePath( string $name ): string
-    {
-        $cacheDir = $this->getCacheDir();
-
-        return $cacheDir . "$name." . self::CACHE_EXT;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return void
-     */
-    private function removeCacheTableForm(string $name): void
-    {
-        $path = $this->cacheFilePath($name);
-
-        if ( file_exists($path) ) unlink($path);
-    }
-
-    /**
-     * @param mixed $tableForm
-     *
-     * @return CollectionFieldForm
-     */
-    private function prepareCollectionFieldForm(mixed $tableForm): CollectionFieldForm
-    {
-        $collectionFieldForm = [];
-
-        if ( count($tableForm[TableForm::ATTR_FIELDS]) )
-        {
-            foreach ( $tableForm[TableForm::ATTR_FIELDS] as $key => $postFieldForm )
-            {
-                if ( $key == 0 ) continue;
-
-                $fieldForm = new FieldForm();
-                $fieldForm->load($postFieldForm);
-
-                if ( $fieldForm->validate() ){
-
-                    $collectionFieldForm[] = $fieldForm;
-                } else {
-                    echo '<pre>';
-                    print_r(['$fieldForm->errors' => $fieldForm->errors]);
-                    echo '</pre>';
-                    exit();
-                }
-            }
-        }
-
-        return new CollectionFieldForm([
-            CollectionFieldForm::ATTR_FIELDS_FORMS => $collectionFieldForm
-        ]);
-    }
-
-    /**
-     * @param mixed $tableForm
-     *
-     * @return CollectionFileForm
-     */
-    private function prepareCollectionFileForm(mixed $tableForm): CollectionFileForm
-    {
-        return new CollectionFileForm([
-            CollectionFileForm::ATTR_FILE_FORMS => []
-        ]);
     }
 }
