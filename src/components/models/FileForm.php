@@ -2,8 +2,8 @@
 
 namespace andy87\yii2\builder\components\models;
 
-use andy87\yii2\builder\components\helpers\Library;
 use yii\base\Model;
+use andy87\yii2\builder\components\helpers\Library;
 
 /**
  * Class `FileForm`

@@ -2,8 +2,6 @@
 
 namespace andy87\yii2\builder\components\models;
 
-
-
 /**
  * Class `FileSettings`
  *

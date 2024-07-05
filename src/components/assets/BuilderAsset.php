@@ -5,7 +5,7 @@ namespace andy87\yii2\builder\components\assets;
 use yii\web\AssetBundle;
 
 /**
- * Class BuilderAsset
+ * Class `BuilderAsset`
  *
  * @package andy87\yii2\builder\components\assets
  */

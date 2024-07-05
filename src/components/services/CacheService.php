@@ -5,6 +5,11 @@ namespace andy87\yii2\builder\components\services;
 use andy87\yii2\builder\components\models\TableForm;
 use Yii;
 
+/**
+ * Class CacheService
+ *
+ * @package andy87\yii2\builder\components\services
+ */
 class CacheService
 {
     public function __construct(private string $pathCache, private string $extension)

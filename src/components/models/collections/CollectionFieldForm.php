@@ -2,8 +2,8 @@
 
 namespace andy87\yii2\builder\components\models\collections;
 
-use andy87\yii2\builder\components\models\TableForm;
 use yii\base\Model;
+use andy87\yii2\builder\components\models\TableForm;
 use andy87\yii2\builder\components\models\FieldForm;
 
 /**

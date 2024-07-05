@@ -2,10 +2,15 @@
 
 namespace andy87\yii2\builder\components\services;
 
-use andy87\yii2\builder\components\models\collections\CollectionTableForm;
-use andy87\yii2\builder\components\models\TableForm;
 use Yii;
+use andy87\yii2\builder\components\models\TableForm;
+use andy87\yii2\builder\components\models\collections\CollectionTableForm;
 
+/**
+ * Class AccordionService
+ *
+ * @package andy87\yii2\builder\components\services
+ */
 class AccordionService
 {
     public function __construct(private string $view){}
