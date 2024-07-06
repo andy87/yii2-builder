@@ -19,25 +19,26 @@ class Builder extends Generator
 
     public const HINT = 'Yii2 Builder - расширение для модуля Gii в фреймворке Yii2 упрощающее генерацию файлов';
 
+
     /** @var string Path on root directory */
-    public const ROOT = '@vendor/andy87/yii2-builder/src';
+    public const SRC = '@vendor/andy87/yii2-builder/src';
 
     /** @var string Path with view directory */
-    public const VIEWS = self::ROOT . '/views';
+    public const VIEWS = self::SRC . '/views';
 
     private const CACHE_EXT = 'json';
 
-    /** @var string Path with cache directory */
-    public string $pathCache = '@app/runtime/cache-yii2-builder/';
+    /** @var ?string Path with cache directory */
+    public ?string $pathCache = null;
 
     /** @var FileSettings[] Collection settings for custom generation  */
     public array $extension = [];
 
     /** @var string Path with templates */
-    public string $dirWithTemplates = self::ROOT . '/templates';
+    public string $dirWithTemplates = self::SRC . '/templates';
 
     /** @var FileSettings[] Collection settings for generation */
-    public array $config = [];
+    public array $listGenerateFileSetting = [];
 
     /** @var CollectionTableForm Collection TableForm */
     public CollectionTableForm $collectionTableForm;
@@ -117,9 +118,9 @@ class Builder extends Generator
     {
         $this->updateConfig();
 
-        $this->tableForm = $this->formService->getBlankTableForm($this->config);
+        $this->tableForm = $this->formService->getBlankTableForm($this);
 
-        $this->formService->requestHandler();
+        $this->formService->requestHandler($this);
 
         $this->collectionTableForm = new CollectionTableForm([
             CollectionTableForm::ATTR_TABLE_FORMS => $this->cacheService->findTablesForm()
@@ -132,11 +133,14 @@ class Builder extends Generator
      */
     private function updateConfig(): void
     {
-        $this->config = require Yii::getAlias(self::ROOT . '/config.php');
-
-        foreach ($this->extension as $key => $config)
+        if (empty($this->listGenerateFileSetting))
         {
-            $this->config[$key] = $config;
+            $this->listGenerateFileSetting = require Yii::getAlias(self::SRC . '/config.php');
+
+            foreach ($this->extension as $key => $config)
+            {
+                $this->listGenerateFileSetting[$key] = $config;
+            }
         }
     }
 }

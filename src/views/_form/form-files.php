@@ -1,5 +1,6 @@
 <?php
 
+use andy87\yii2\builder\components\models\FileForm;
 use yii\web\View;
 use andy87\yii2\builder\components\models\TableForm;
 
@@ -15,22 +16,31 @@ use andy87\yii2\builder\components\models\TableForm;
     <table class="table collectionFiles">
         <thead>
             <th>
-                <input type="checkbox" name="checkAll"/>
+                <input type="checkbox" name="checkAll" checked/>
             </th>
-            <th>Фильтр генерации файлов<br><small><i>Выделяются те файлы -  которые не надо генерировать</i></small></th>
+            <th>Фильтр генерации файлов<br><small><i>Выделяются файлы - которые будут сгенерированы</i></small></th>
         </thead>
         <tbody>
-            <?php if ($tableForm->collectionFileForm): ?>
-                <?php foreach ($tableForm->collectionFileForm->fileForms as $file_id => $fileForm): ?>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="CollectionTableForm[tableForms][0][collectionFileForm][<?=$file_id?>][skip]" value="<?= $file_id ?>"/>
-                        </td>
-                        <td>
-                            <?= $fileForm->path ?>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
+            <?php if ($tableForm->collectionFileForm ): ?>
+                <?php if (count($tableForm->collectionFileForm->fileForms) ): ?>
+                    <?php foreach ($tableForm->collectionFileForm->fileForms as $file_id => $fileForm):
+                        if ( !isset($fileForm->path) || !$fileForm->path ){
+                            echo '<pre>';
+                            print_r(['$fileForm' => $fileForm->attributes]);
+                            echo '</pre>';
+                            exit();
+                        }
+                        ?>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="CollectionTableForm[tableForms][0][<?=TableForm::ATTR_FILES?>][<?=$file_id?>][<?=FileForm::ATTR_GENERATE?>]" value="<?= (int) $fileForm->generate ?>" checked/>
+                            </td>
+                            <td>
+                                <?= $fileForm->path ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             <?php endif; ?>
         </tbody>
     </table>

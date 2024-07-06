@@ -1,18 +1,17 @@
 <?php
 
-namespace andy87\yii2\builder\components\models;
+namespace andy87\yii2\builder\components\models\forms;
 
-use yii\base\Model;
 use andy87\yii2\builder\components\helpers\Library;
+use andy87\yii2\builder\components\models\FileSettings;
+use yii\base\Model;
 
 /**
- * Class `FileForm`
+ * Class GenerateFileForm
  *
- * File generate description
- *
- * @package andy87\yii2\builder\components\models
+ * @package andy87\yii2\builder\components\models\forms
  */
-class FileForm extends Model
+class GenerateFileForm extends Model
 {
     public const ATTR_ID = 'id';
     public const ATTR_GENERATE = 'generate';

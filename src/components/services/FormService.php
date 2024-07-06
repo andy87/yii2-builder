@@ -2,14 +2,17 @@
 
 namespace andy87\yii2\builder\components\services;
 
-use andy87\yii2\builder\components\models\collections\CollectionFieldForm;
-use andy87\yii2\builder\components\models\collections\CollectionFileForm;
-use andy87\yii2\builder\components\models\collections\CollectionTableForm;
+use andy87\yii2\builder\components\Builder;
+use andy87\yii2\builder\components\helpers\NameCase;
+use Yii;
 use andy87\yii2\builder\components\models\FieldForm;
 use andy87\yii2\builder\components\models\FileForm;
 use andy87\yii2\builder\components\models\FileSettings;
 use andy87\yii2\builder\components\models\TableForm;
-use Yii;
+use andy87\yii2\builder\components\models\collections\CollectionFieldForm;
+use andy87\yii2\builder\components\models\collections\CollectionFileForm;
+use andy87\yii2\builder\components\models\collections\CollectionTableForm;
+use yii\helpers\Inflector;
 
 /**
  * Class FormService
@@ -30,23 +33,25 @@ class FormService
     }
 
     /**
-     * @param array $config
+     * @param Builder $builder
      *
      * @return TableForm
      */
-    public function getBlankTableForm( array $config ): TableForm
+    public function getBlankTableForm( Builder $builder ): TableForm
     {
         $tableForm = $this->getModelTableForm();
 
-        $tableForm->collectionFileForm = $this->getBlankCollectionFileForm($config);
+        $tableForm->collectionFileForm = $this->getBlankCollectionFileForm($builder);
 
         return $tableForm;
     }
 
     /**
+     * @param Builder $builder
+     * -
      * @return void
      */
-    public function requestHandler(): void
+    public function requestHandler(Builder $builder): void
     {
         $request = Yii::$app->request;
 
@@ -57,14 +62,15 @@ class FormService
             $collectionTableForm = new CollectionTableForm();
             $collectionTableForm->load($post);
 
-            if ( count($collectionTableForm->{CollectionTableForm::ATTR_TABLE_FORMS}) )
+            if ( count($collectionTableForm->tableForms) )
             {
-                foreach ( $collectionTableForm->{CollectionTableForm::ATTR_TABLE_FORMS} as $tableForm )
+                foreach ( $collectionTableForm->tableForms as $tableForm )
                 {
                     if( !isset($tableForm['action']) ) continue;
 
                     $tableForm[TableForm::ATTR_FIELDS] = $this->prepareCollectionFieldForm($tableForm);
-                    $tableForm[TableForm::ATTR_FILES] = $this->prepareCollectionFileForm($tableForm);
+                    $tableForm[TableForm::ATTR_FILES] = $this->prepareCollectionFileForm($tableForm, $builder);
+
                     $tableForm = new TableForm($tableForm);
 
                     switch ($tableForm->action)
@@ -91,11 +97,11 @@ class FormService
 
 
     /**
-     * @param mixed $tableForm
+     * @param array $tableForm
      *
      * @return CollectionFieldForm
      */
-    private function prepareCollectionFieldForm(mixed $tableForm): CollectionFieldForm
+    private function prepareCollectionFieldForm(array $tableForm): CollectionFieldForm
     {
         $collectionFieldForm = [];
 
@@ -126,14 +132,41 @@ class FormService
     }
 
     /**
-     * @param mixed $tableForm
+     * @param array $tableForm
+     * @param Builder $builder
      *
      * @return CollectionFileForm
      */
-    private function prepareCollectionFileForm(mixed $tableForm): CollectionFileForm
+    private function prepareCollectionFileForm(array $tableForm, Builder $builder): CollectionFileForm
     {
+        $collectionFileForm = [];
+
+        if ( count($tableForm[TableForm::ATTR_FILES]) )
+        {
+            foreach ( $tableForm[TableForm::ATTR_FILES] as $key => $postFileForm )
+            {
+                if ( $key == 0 ) continue;
+
+                $fileForm = new FileForm();
+                $fileForm->load($postFileForm);
+
+                if ( $fileForm->validate() )
+                {
+                    $fileForm->settings = $this->setupFileFormSettings($fileForm, $tableForm['tableName'], clone $builder->listGenerateFileSetting[$fileForm->id]);
+
+                    $collectionFileForm[] = $fileForm;
+
+                } else {
+                    echo '<pre>';
+                    print_r(['$fileForm->errors' => $fileForm->errors]);
+                    echo '</pre>';
+                    exit();
+                }
+            }
+        }
+
         return new CollectionFileForm([
-            CollectionFileForm::ATTR_FILE_FORMS => []
+            CollectionFileForm::ATTR_FILE_FORMS => $collectionFileForm
         ]);
     }
 
@@ -186,14 +219,14 @@ class FormService
     }
 
     /**
-     * @param FileSettings[] $config
+     * @param Builder $builder
      *
      * @return CollectionFileForm
      */
-    private function getBlankCollectionFileForm(array $config): CollectionFileForm
+    private function getBlankCollectionFileForm(Builder $builder): CollectionFileForm
     {
         return new CollectionFileForm([
-            CollectionFileForm::ATTR_FILE_FORMS => $this->generateCollectionFileFormByFileSettings($config)
+            CollectionFileForm::ATTR_FILE_FORMS => $this->generateCollectionFileFormByFileSettings($builder->listGenerateFileSetting)
         ]);
     }
 
@@ -215,5 +248,33 @@ class FormService
         }
 
         return $collectionFileForm;
+    }
+
+    /**
+     * @param FileForm $fileForm
+     * @param string $tableName
+     * @param FileSettings $fileSettings
+     *
+     * @return ?FileSettings
+     */
+    private function setupFileFormSettings(FileForm $fileForm, string $tableName, FileSettings $fileSettings): ?FileSettings
+    {
+        if ( $fileForm->generate )
+        {
+            $replace = [
+                NameCase::SNAKE => $tableName,
+                NameCase::KEBAB => str_replace('_', '-', $tableName),
+            ];
+
+            $replace[NameCase::PASCAL] = Inflector::id2camel($replace[NameCase::KEBAB]);
+            $replace[NameCase::CAMEL] = lcfirst($replace[NameCase::PASCAL]);
+
+            $from = array_keys($replace);
+            $to = array_values($replace);
+
+            $fileSettings->fileName = str_replace($from, $to, $fileSettings->fileName);
+        }
+
+        return $fileSettings;
     }
 }

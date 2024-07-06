@@ -2,8 +2,8 @@
 
 namespace andy87\yii2\builder\components\services;
 
-use andy87\yii2\builder\components\models\TableForm;
 use Yii;
+use andy87\yii2\builder\components\models\TableForm;
 
 /**
  * Class CacheService
@@ -12,9 +12,31 @@ use Yii;
  */
 class CacheService
 {
-    public function __construct(private string $pathCache, private string $extension)
+    private const DEFAULT_DIR = 'cache-yii2-builder';
+
+    private string $pathCache;
+
+    /**
+     * @param string|null $pathCache
+     *
+     * @param string $extension
+     */
+    public function __construct(?string $pathCache, private string $extension)
     {
-        $this->checkDir($this->getDir());
+        $this->setupPathDir($pathCache);
+    }
+
+    /**
+     * @param string|null $pathCache
+     * @return void
+     */
+    private function setupPathDir(?string $pathCache): void
+    {
+        $this->pathCache = ( $pathCache )
+            ? Yii::getAlias($pathCache)
+            : Yii::$app->getRuntimePath() . '/' .self::DEFAULT_DIR;
+
+        $this->createDirIfNotExists($this->pathCache);
     }
 
     /**
@@ -22,19 +44,11 @@ class CacheService
      *
      * @return void
      */
-    private function checkDir( string $dir ): void
+    private function createDirIfNotExists(string $dir ): void
     {
         if (is_dir($dir)) return;
 
         mkdir($dir, 0777, true);
-    }
-
-    /**
-     * @return string
-     */
-    public function getDir(): string
-    {
-        return Yii::getAlias($this->pathCache);
     }
 
 
@@ -45,9 +59,7 @@ class CacheService
      */
     public function findTablesForm(): array
     {
-        $cacheDir = $this->getDir();
-
-        $files = glob($cacheDir . '*.' . $this->extension );
+        $files = glob($this->pathCache . '/*.' . $this->extension );
 
         $collectionTableForm = [];
 
@@ -75,7 +87,7 @@ class CacheService
      */
     public function filePath( string $fileName): string
     {
-        return $this->getDir() . "$fileName." . $this->extension;
+        return $this->pathCache . "/$fileName." . $this->extension;
     }
 
     /**
@@ -125,9 +137,7 @@ class CacheService
      */
     private function cacheFilePath( string $name ): string
     {
-        $cacheDir = $this->getDir();
-
-        return $cacheDir . "$name." . $this->extension;
+        return $this->pathCache . "/$name." . $this->extension;
     }
 
 }

@@ -9,86 +9,48 @@ namespace andy87\yii2\builder\components\helpers;
  */
 abstract class Library
 {
-    /** @var int common/models/sources/{{PascalCase}}Source */
-    public const COMMON_MODEL_SOURCES = 0;
-    /** @var int common/models/sources/{{PascalCase}} */
-    public const COMMON_MODEL_ITEM = 1;
-    /** @var int common/repositories/{{PascalCase}}Repository */
-    public const COMMON_REPOSITORY = 2;
-    /** @var int common/services/{{PascalCase}}Service */
-    public const COMMON_SERVICE = 3;
+    public const COMMON_MODEL_SOURCES = 'common/models/sources/{{PascalCase}}Source';
+    public const COMMON_MODEL_ITEM = 'common/models/sources/{{PascalCase}}';
+    public const COMMON_REPOSITORY = 'common/repositories/{{PascalCase}}Repository';
+    public const COMMON_SERVICE = 'common/services/{{PascalCase}}Service';
 
 
 
-    /** @var int console/models/items/{{PascalCase}} */
-    public const CONSOLE_MODEL = 11;
-    /** @var int console/models/items/{{PascalCase}} */
-    public const CONSOLE_MODEL_FORM = 12;
-    /** @var int console/repositories/{{PascalCase}}Repository */
-    public const CONSOLE_REPOSITORY = 13;
-    /** @var int console/services/{{PascalCase}}Service */
-    public const CONSOLE_SERVICE = 14;
-
-    /** @var int console/migration/m_date_time__create_table__{{snake_case}} */
-    public const CONSOLE_MIGRATE = 15;
+    public const CONSOLE_MODEL = 'console/models/items/{{PascalCase}}';
+    public const CONSOLE_MODEL_FORM = 'console/models/items/{{PascalCase}}';
+    public const CONSOLE_REPOSITORY = 'console/repositories/{{PascalCase}}Repository';
+    public const CONSOLE_SERVICE = 'console/services/{{PascalCase}}Service';
+    public const CONSOLE_MIGRATE = 'console/migration/m_ymd_his__create_table__{{snake_case}}';
 
 
 
-    /** @var int backend/models/items/{{PascalCase}} */
-    public const BACKEND_MODEL = 21;
-    /** @var int backend/models/forms/{{PascalCase}}Form */
-    public const BACKEND_MODEL_FORM = 22;
-    /** @var int backend/models/search/{{PascalCase}}Search */
-    public const BACKEND_MODEL_SEARCH = 23;
-    /** @var int backend/repositories/{{PascalCase}}Repository */
-    public const BACKEND_REPOSITORY = 24;
-    /** @var int backend/services/{{PascalCase}}Service */
-    public const BACKEND_SERVICE = 25;
-    /** @var int backend/controllers/{{PascalCase}}Controller */
-    public const BACKEND_CONTROLLER = 26;
-    /** @var int backend/tpl/{{kebab-case}}-list */
-    public const BACKEND_TPL_LIST = 30;
-    /** @var int backend/tpl/{{kebab-case}}-view */
-    public const BACKEND_TPL_VIEW = 31;
-    /** @var int backend/tpl/{{kebab-case}}-create */
-    public const BACKEND_TPL_CREATE = 32;
-    /** @var int backend/tpl/{{kebab-case}}-update */
-    public const BACKEND_TPL_UPDATE = 33;
-    /** @var int backend/tpl/{{kebab-case}}-form */
-    public const BACKEND_TPL_FORM = 34;
-    /** @var int backend/resources/{{PascalCase}}Resource */
-    public const BACKEND_RESOURCES_LIST = 41;
-    /** @var int backend/resources/{{PascalCase}}Resource */
-    public const BACKEND_RESOURCES_VIEW = 42;
-    /** @var int backend/resources/{{PascalCase}}Resource */
-    public const BACKEND_RESOURCES_CREATE = 43;
-    /** @var int backend/resources/{{PascalCase}}Resource */
-    public const BACKEND_RESOURCES_UPDATE = 44;
-    /** @var int backend/resources/{{PascalCase}}Resource */
-    public const BACKEND_RESOURCES_FORM = 45;
+    public const BACKEND_MODEL = 'backend/models/items/{{PascalCase}}';
+        public const BACKEND_MODEL_FORM = 'backend/models/forms/{{PascalCase}}Form';
+        public const BACKEND_MODEL_SEARCH = 'backend/models/search/{{PascalCase}}Search';
+    public const BACKEND_REPOSITORY = 'backend/repositories/{{PascalCase}}Repository';
+    public const BACKEND_SERVICE = 'backend/services/{{PascalCase}}Service';
+    public const BACKEND_CONTROLLER = 'backend/controllers/{{PascalCase}}Controller';
+    public const BACKEND_TPL_LIST = 'backend/tpl/{{kebab-case}}-list';
+        public const BACKEND_TPL_VIEW = 'backend/tpl/{{kebab-case}}-view';
+        public const BACKEND_TPL_CREATE = 'backend/tpl/{{kebab-case}}-create';
+        public const BACKEND_TPL_UPDATE = 'backend/tpl/{{kebab-case}}-update';
+        public const BACKEND_TPL_FORM = 'backend/tpl/{{kebab-case}}-form';
+    public const BACKEND_RESOURCES_LIST = 'backend/resources/{{PascalCase}}Resource';
+        public const BACKEND_RESOURCES_VIEW = 'backend/resources/{{PascalCase}}Resource';
+        public const BACKEND_RESOURCES_CREATE = 'backend/resources/{{PascalCase}}Resource';
+        public const BACKEND_RESOURCES_UPDATE = 'backend/resources/{{PascalCase}}Resource';
+        public const BACKEND_RESOURCES_FORM = 'backend/resources/{{PascalCase}}Resource';
 
 
 
-    /** @var int frontend/models/{{PascalCase}} */
-    public const FRONTEND_MODEL = 51;
-
-    /** @var int frontend/models/{{PascalCase}}Search */
-    public const FRONTEND_MODEL_SEARCH = 52;
-
-    /** @var int frontend/models/{{PascalCase}}Form */
-    public const FRONTEND_MODEL_FORM = 53;
-    /** @var int frontend/repositories/{{PascalCase}}Repository */
-    public const FRONTEND_REPOSITORY = 54;
-    /** @var int frontend/services/{{PascalCase}}Service */
-    public const FRONTEND_SERVICE = 55;
-    /** @var int frontend/controllers/{{PascalCase}}Controller */
-    public const FRONTEND_CONTROLLER = 56;
-    /** @var int frontend/tpl/{{kebab-case}}-list */
-    public const FRONTEND_TPL_LIST = 60;
-    /** @var int frontend/tpl/{{kebab-case}}-view */
-    public const FRONTEND_TPL_VIEW = 61;
-    /** @var int frontend/resources/{{PascalCase}}Resource */
-    public const FRONTEND_RESOURCES_LIST = 71;
-    /** @var int frontend/resources/{{PascalCase}}Resource */
-    public const FRONTEND_RESOURCES_VIEW = 72;
+    public const FRONTEND_MODEL = 'frontend/models/{{PascalCase}}';
+        public const FRONTEND_MODEL_SEARCH = 'frontend/models/{{PascalCase}}Search';
+        public const FRONTEND_MODEL_FORM = 'frontend/models/{{PascalCase}}Form';
+    public const FRONTEND_REPOSITORY = 'frontend/repositories/{{PascalCase}}Repository';
+    public const FRONTEND_SERVICE = 'frontend/services/{{PascalCase}}Service';
+    public const FRONTEND_CONTROLLER = 'frontend/controllers/{{PascalCase}}Controller';
+    public const FRONTEND_TPL_LIST = 'frontend/tpl/{{kebab-case}}-list';
+        public const FRONTEND_TPL_VIEW = 'frontend/tpl/{{kebab-case}}-view';
+    public const FRONTEND_RESOURCES_LIST = 'frontend/resources/{{PascalCase}}Resource';
+        public const FRONTEND_RESOURCES_VIEW = 'frontend/resources/{{PascalCase}}Resource';
 }
