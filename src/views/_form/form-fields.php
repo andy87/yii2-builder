@@ -28,7 +28,7 @@ $tdStyle = 'pl-0 pr-0 pt-1 pb-1 ';
                 <th class="<?=$tdStyle?>" style="width: 6%;">unique</th>
                 <th class="<?=$tdStyle?>" style="width: 6%;" title="foreignKey">fk</th>
                 <th class="<?=$tdStyle?>" style="width: 6%;">
-                    <button class="btn btn-sm btn-success" style="width: 28px" type="button" onclick="app.builder.tableAddForm()">
+                    <button class="btn btn-sm btn-success" style="width: 28px" type="button" onclick="app.builder.addFormField()">
                         +
                     </button>
                 </th>

@@ -5,3 +5,9 @@
     width: 100%;
     max-width: 100%;
 }
+
+.collectionFiles TBODY {
+    display: table-caption;
+    height: 256px;
+    overflow: auto;
+}
