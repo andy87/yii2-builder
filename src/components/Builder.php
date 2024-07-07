@@ -2,10 +2,16 @@
 
 namespace andy87\yii2\builder\components;
 
+use andy87\yii2\builder\components\models\collections\CollectionGenerateTableForm;
+use andy87\yii2\builder\components\models\collections\CollectionGenerateTableSettings;
+use andy87\yii2\builder\components\models\forms\GenerateTableForm;
+use andy87\yii2\builder\components\models\settings\FileSettings;
+use andy87\yii2\builder\components\models\settings\GenerateFileSetting;
+use Exception;
 use Yii;
 use yii\gii\Generator;
 use andy87\yii2\builder\components\services\{ CacheService, FormService, AccordionService };
-use andy87\yii2\builder\components\models\{ TableForm, FileSettings, collections\CollectionTableForm };
+
 
 /**
  * Class Builder
@@ -28,46 +34,74 @@ class Builder extends Generator
 
     private const CACHE_EXT = 'json';
 
-    /** @var ?string Path with cache directory */
+
+
+    /**
+     * @var FormService[]|CacheService[]|AccordionService[]
+     */
+    public static array $instances = [];
+
+
+
+    /**
+     * @var ?string Path with cache directory
+     */
     public ?string $pathCache = null;
 
-    /** @var FileSettings[] Collection settings for custom generation  */
+    /**
+     * @var FileSettings[] Collection settings for custom generation
+     */
     public array $extension = [];
 
-    /** @var string Path with templates */
+    /**
+     * @var string Path with templates
+     */
     public string $dirWithTemplates = self::SRC . '/templates';
 
-    /** @var FileSettings[] Collection settings for generation */
+
+    /**
+     * @var GenerateFileSetting[]
+     */
     public array $listGenerateFileSetting = [];
+    /**
+     * @var CollectionGenerateTableSettings
+     */
+    public CollectionGenerateTableSettings $collectionGenerateTableSettings;
 
-    /** @var CollectionTableForm Collection TableForm */
-    public CollectionTableForm $collectionTableForm;
-
-    /** @var TableForm */
-    public TableForm $tableForm;
-
-    public FormService $formService;
-    public CacheService $cacheService;
-    public AccordionService $accordionService;
-
+    /**
+     * @var CollectionGenerateTableForm
+     */
+    public CollectionGenerateTableForm $collectionGenerateTableForm;
 
 
     /**
      * Initialization
      *
      * @return void
+     *
+     * @throws Exception
      */
     public function init(): void
     {
         parent::init();
 
-        $this->cacheService = new CacheService( $this->pathCache, self::CACHE_EXT, );
+        $this->setupServices();
 
-        $this->formService = new FormService($this->cacheService);
-
-        $this->accordionService = new AccordionService(self::VIEWS);
+        $this->updateConfig();
 
         $this->run();
+    }
+
+    /**
+     * @return void
+     */
+    private function setupServices(): void
+    {
+        self::$instances[CacheService::class] = new CacheService($this->pathCache, self::CACHE_EXT);
+
+        self::$instances[FormService::class] = new FormService(self::$instances[CacheService::class]);
+
+        self::$instances[AccordionService::class] = new AccordionService(self::VIEWS);
     }
 
 
@@ -113,20 +147,19 @@ class Builder extends Generator
 
     /**
      * @return void
+     *
+     * @throws Exception
      */
     public function run(): void
     {
-        $this->updateConfig();
+        $formService = FormService::getInstance();
 
-        $this->tableForm = $this->formService->getBlankTableForm($this);
+        $this->collectionGenerateTableForm = $formService->getCollectionGenerateTableForm($this);
 
-        $this->formService->requestHandler($this);
+        $formService->requestHandler($this);
 
-        $this->collectionTableForm = new CollectionTableForm([
-            CollectionTableForm::ATTR_TABLE_FORMS => $this->cacheService->findTablesForm()
-        ]);
+        $this->collectionGenerateTableSettings = $formService->getCollectionGenerateTableSettings($this);
     }
-
 
     /**
      * @return void

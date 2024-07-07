@@ -2,6 +2,9 @@
 
 namespace andy87\yii2\builder\components\services;
 
+use andy87\yii2\builder\components\Builder;
+use andy87\yii2\builder\components\models\settings\GenerateTableSetting;
+use Exception;
 use Yii;
 use andy87\yii2\builder\components\models\TableForm;
 
@@ -24,6 +27,20 @@ class CacheService
     public function __construct(?string $pathCache, private string $extension)
     {
         $this->setupPathDir($pathCache);
+    }
+
+    /**
+     * @return CacheService
+     *
+     * @throws Exception
+     */
+    public static function getInstance(): CacheService
+    {
+        if ( isset(Builder::$instances[static::class]) ) {
+            return Builder::$instances[static::class];
+        }
+
+        throw new Exception('Error: ' . static::class . ' not found in Builder::$instances');
     }
 
     /**
@@ -55,13 +72,13 @@ class CacheService
     /**
      * Return cache collection TableForm
      *
-     * @return TableForm[]
+     * @return GenerateTableSetting[]
      */
-    public function findTablesForm(): array
+    public function getCollectionGenerateTableSettings(): array
     {
         $files = glob($this->pathCache . '/*.' . $this->extension );
 
-        $collectionTableForm = [];
+        $collectionGenerateTableSettings = [];
 
         foreach ($files as $path)
         {
@@ -71,13 +88,14 @@ class CacheService
             {
                 $content = file_get_contents($path);
 
-                $fileName = pathinfo($path, PATHINFO_FILENAME);
+                /** @var GenerateTableSetting $generateTableForm */
+                $generateTableSettings = unserialize($content);
 
-                $collectionTableForm[$fileName] = unserialize($content);
+                $collectionGenerateTableSettings[$generateTableSettings->] = unserialize($content);
             }
         }
 
-        return $collectionTableForm;
+        return $collectionGenerateTableSettings;
     }
 
     /**
@@ -89,6 +107,7 @@ class CacheService
     {
         return $this->pathCache . "/$fileName." . $this->extension;
     }
+
 
     /**
      * @param TableForm $tableForm

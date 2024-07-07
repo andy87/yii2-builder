@@ -2,6 +2,8 @@
 
 namespace andy87\yii2\builder\components\services;
 
+use andy87\yii2\builder\components\Builder;
+use Exception;
 use Yii;
 use andy87\yii2\builder\components\models\TableForm;
 use andy87\yii2\builder\components\models\collections\CollectionTableForm;
@@ -14,6 +16,20 @@ use andy87\yii2\builder\components\models\collections\CollectionTableForm;
 class AccordionService
 {
     public function __construct(private string $view){}
+
+    /**
+     * @return AccordionService
+     *
+     * @throws Exception
+     */
+    public static function getInstance(): AccordionService
+    {
+        if ( isset(Builder::$instances[static::class]) ) {
+            return Builder::$instances[static::class];
+        }
+
+        throw new Exception('Error: ' . static::class . ' not found in Builder::$instances');
+    }
 
     /**
      * @param CollectionTableForm $collectionTableForm

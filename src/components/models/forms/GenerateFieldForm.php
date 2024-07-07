@@ -11,7 +11,6 @@ use yii\base\Model;
  */
 class GenerateFieldForm extends Model
 {
-
     public const ATTR_NAME = 'name';
     public const ATTR_COMMENT = 'comment';
     public const ATTR_TYPE = 'type';
@@ -20,11 +19,6 @@ class GenerateFieldForm extends Model
     public const ATTR_DEFAULT = 'default';
     public const ATTR_FOREIGN_KEY = 'foreignKey';
     public const ATTR_UNIQUE = 'unique';
-    public const ATTR_ACTION = 'action';
-
-    public const ACTION_ADD = 'add';
-    public const ACTION_UPDATE = 'update';
-    public const ACTION_REMOVE = 'remove';
 
 
     public const TYPE_LIST = [
@@ -58,10 +52,10 @@ class GenerateFieldForm extends Model
     public function rules(): array
     {
         return [
-            [['name', 'type'], 'required'],
-            [['name', 'comment', 'type', 'default'], 'string'],
-            [['length'], 'integer'],
-            [['notNull', 'unique', 'foreignKey'], 'boolean'],
+            [[self::ATTR_NAME, self::ATTR_TYPE], 'required'],
+            [[self::ATTR_NAME, self::ATTR_COMMENT, self::ATTR_TYPE, self::ATTR_DEFAULT], 'string'],
+            [[self::ATTR_LENGTH], 'integer'],
+            [[self::ATTR_NOT_NULL, self::ATTR_UNIQUE, self::ATTR_FOREIGN_KEY], 'boolean'],
         ];
     }
 }

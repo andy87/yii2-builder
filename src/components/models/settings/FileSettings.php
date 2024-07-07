@@ -1,6 +1,6 @@
 <?php
 
-namespace andy87\yii2\builder\components\models;
+namespace andy87\yii2\builder\components\models\settings;
 
 /**
  * Class `FileSettings`

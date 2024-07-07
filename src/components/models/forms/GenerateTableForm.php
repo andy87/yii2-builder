@@ -2,29 +2,38 @@
 
 namespace andy87\yii2\builder\components\models\forms;
 
-use yii\base\Model;
+use andy87\yii2\builder\components\models\settings\GenerateTableSetting;
 
 /**
  * Class GenerateTableForm
  *
  * @package andy87\yii2\builder\components\models\forms
  */
-class GenerateTableForm extends Model
+class GenerateTableForm extends GenerateTableSetting
 {
-    /** @var string */
-    public string $tableName;
+    public const ID_NEW = '0';
 
-    /** @var string */
-    public string $tableComment;
+    public const ATTR_GENERATE_MODEL_FORM = 'generateModelForm';
+
+    public const ATTR_GENERATE_FIELD_FORM = 'listGenerateFieldForm';
+
+    public const ATTR_GENERATE_FILE_FORM = 'listGenerateFileForm';
+
+
+        /** @var string  */
+    public string $id = self::ID_NEW;
+
+
 
     /** @var GenerateModelForm */
     public GenerateModelForm $generateModelForm;
 
     /** @var GenerateFieldForm[] */
-    public array $generateFieldForm;
+    public array $listGenerateFieldForm = [];
 
     /** @var GenerateFileForm[] */
-    public array $generateFileForm;
+    public array $listGenerateFileForm = [];
+
 
 
     /**
@@ -34,20 +43,21 @@ class GenerateTableForm extends Model
     {
         parent::init();
 
-        $this->generateModelForm = new GenerateModelForm();
+        $this->id = self::ID_NEW;
+
+        $this->generateModelForm = new GenerateModelForm;
     }
+
     /**
      * @return array
      */
     public function rule(): array
     {
-        return [
-            [['tableName'], 'required'],
-            [['tableName', 'tableComment'], 'string'],
-            [['generateModelForm'], 'each', 'rule' => ['safe']],
-            [['generateFieldForm'], 'each', 'rule' => ['class', GenerateFieldForm::class]],
-            [['generateFileForm'], 'each', 'rule' => ['class', GenerateFileForm::class]],
-        ];
+        return array_merge(parent::rules(),[
+            [[self::ATTR_GENERATE_MODEL_FORM], 'each', 'rule' => ['safe']],
+            [[self::ATTR_GENERATE_FIELD_FORM], 'each', 'rule' => ['class', GenerateFieldForm::class]],
+            [[self::ATTR_GENERATE_FILE_FORM], 'each', 'rule' => ['class', GenerateFileForm::class]],
+        ]);
     }
 
     /**
@@ -60,31 +70,9 @@ class GenerateTableForm extends Model
     {
         if ($load = parent::load($data, $formName))
         {
-            $this->generateModelForm->load($data);
+            $this->id = $this->tableName;
         }
 
         return $load;
-    }
-
-    private function prepareFieldForm($data): void
-    {
-        $arrayGenerateFieldForm = $data['generateFieldForm'] ?? [];
-
-        foreach ($arrayGenerateFieldForm as $key => $params)
-        {
-            $this->generateFieldForm[$key] = new GenerateFieldForm();
-            $this->generateFieldForm[$key]->load($params);
-        }
-    }
-
-    private function prepareFileForm($data): void
-    {
-        $arrayGenerateFileForm = $data['generateFileForm'] ?? [];
-
-        foreach ($arrayGenerateFileForm as $key => $params)
-        {
-            $this->generateFileForm[$key] = new GenerateFileForm();
-            $this->generateFileForm[$key]->load($params);
-        }
     }
 }

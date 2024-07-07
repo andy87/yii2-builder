@@ -4,14 +4,11 @@ namespace andy87\yii2\builder\components\services;
 
 use andy87\yii2\builder\components\Builder;
 use andy87\yii2\builder\components\helpers\NameCase;
+use andy87\yii2\builder\components\models\collections\CollectionGenerateTableForm;
+use andy87\yii2\builder\components\models\collections\CollectionGenerateTableSettings;
+use andy87\yii2\builder\components\models\forms\GenerateTableForm;
+use Exception;
 use Yii;
-use andy87\yii2\builder\components\models\FieldForm;
-use andy87\yii2\builder\components\models\FileForm;
-use andy87\yii2\builder\components\models\FileSettings;
-use andy87\yii2\builder\components\models\TableForm;
-use andy87\yii2\builder\components\models\collections\CollectionFieldForm;
-use andy87\yii2\builder\components\models\collections\CollectionFileForm;
-use andy87\yii2\builder\components\models\collections\CollectionTableForm;
 use yii\helpers\Inflector;
 
 /**
@@ -25,25 +22,37 @@ class FormService
 
 
     /**
-     * @return TableForm
+     *
+     * @return FormService
+     * @throws Exception
      */
-    public function getModelTableForm(): TableForm
+    public static function getInstance(): FormService
     {
-        return new TableForm();
+        if ( isset(Builder::$instances[static::class]) ) {
+            return Builder::$instances[static::class];
+        }
+
+        throw new Exception('Error: ' . static::class . ' not found in Builder::$instances');
+    }
+
+    /**
+     * @return GenerateTableForm
+     */
+    public function getModelGenerateTableForm(): GenerateTableForm
+    {
+        return new GenerateTableForm();
     }
 
     /**
      * @param Builder $builder
      *
-     * @return TableForm
+     * @return GenerateTableForm
      */
-    public function getBlankTableForm( Builder $builder ): TableForm
+    public function getBlankGenerateTableForm( Builder $builder ): GenerateTableForm
     {
-        $tableForm = $this->getModelTableForm();
+        $generateTableForm = $this->getModelGenerateTableForm();
 
-        $tableForm->collectionFileForm = $this->getBlankCollectionFileForm($builder);
-
-        return $tableForm;
+        return $generateTableForm;
     }
 
     /**
@@ -216,6 +225,32 @@ class FormService
         $path = $this->cacheService->filePath($name);
 
         if ( file_exists($path) ) unlink($path);
+    }
+
+    /**
+     * @param Builder $builder
+     *
+     * @return CollectionGenerateTableForm
+     */
+    public function getCollectionGenerateTableForm(Builder $builder)
+    {
+        $collectionGenerateTableForm = new CollectionGenerateTableForm();
+
+        return $collectionGenerateTableForm;
+
+    }
+
+    /**
+     * @param Builder $builder
+     *
+     * @return CollectionGenerateTableSettings
+     */
+    public function getCollectionGenerateTableSettings(Builder $builder)
+    {
+        $collectionGenerateTableSettings = new CollectionGenerateTableSettings();
+
+
+        return $collectionGenerateTableSettings;
     }
 
     /**

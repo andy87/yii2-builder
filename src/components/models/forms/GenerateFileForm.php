@@ -2,9 +2,9 @@
 
 namespace andy87\yii2\builder\components\models\forms;
 
-use andy87\yii2\builder\components\helpers\Library;
-use andy87\yii2\builder\components\models\FileSettings;
 use yii\base\Model;
+use andy87\yii2\builder\components\helpers\Library;
+use andy87\yii2\builder\components\models\settings\FileSettings;
 
 /**
  * Class GenerateFileForm
@@ -27,4 +27,19 @@ class GenerateFileForm extends Model
     public string $path;
 
     public FileSettings $settings;
+
+
+
+    /**
+     * @return array[]
+     */
+    public function rules(): array
+    {
+        return [
+            [[self::ATTR_ID, self::ATTR_GENERATE, self::ATTR_PATH], 'required'],
+            [[self::ATTR_ID], 'string'],
+            [[self::ATTR_GENERATE], 'boolean'],
+            [[self::ATTR_PATH], 'string'],
+        ];
+    }
 }
