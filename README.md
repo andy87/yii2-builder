@@ -52,7 +52,6 @@ php composer.phar require andy87/yii2-builder
 <p align="center">- - - - -</p>
 
 В конфигурационном файле `config/web-local.php`/`frontend/config/main-local.php` настроить расширение gii:  
-`andy87\yii2\architect\components\controllers\ArchitectController`
 
 ```php
 use andy87\yii2\builder\components\Builder;
