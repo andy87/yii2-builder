@@ -2,8 +2,7 @@
 
 namespace andy87\yii2\builder\components\base;
 
-use yii\base\Model;
-use yii\bootstrap5\Html;
+use yii\{ base\Model, bootstrap5\Html };
 
 /**
  * Class BaseModel
@@ -18,49 +17,54 @@ class BaseModel extends Model
     /**
      * @param string $type
      * @param string $attr
-     * @param array $values
+     * @param array $options
      *
      * @return string
      */
-    public static function constructInput( string $type, string $attr, array $values): string
+    public function constructInput( string $type, string $attr, array $options = []): string
     {
-        $className = self::getClassName();
+        $className = static::getClassName();
 
         $name = "name=\"{$className}[$attr]\"";
 
-        return Html::input($type, $name, ($values[$attr] ?? null), [
+        $value = $this->{$attr} ?? null;
+
+        $options = array_merge($options, [
             'class' => 'form-control',
         ]);
+
+        return Html::input($type, $name, $value, $options );
     }
 
     /**
      * @param string $text
      * @param array $options
+     *
      * @return string
      */
-    public static function constructActionButton(string $text, array $options): string
+    public function constructActionButton(string $text, array $options = []): string
     {
-        $className = self::getClassName();
+        $className = static::getClassName();
 
         $options = array_merge($options, [
             'name' => "{$className}[action]"
         ]);
 
-        return Html::button($text, $options );
+        return Html::button( $text, $options );
     }
 
     /**
      * @return string
      */
-    private static function getClassName(): string
+    protected static function getClassName(): string
     {
-        if ( self::$className === null ) {
-            $className = self::class;
+        if ( static::$className === null ) {
+            $className = static::class;
             $className = get_class(new $className);
             $className = explode('\\', $className);
-            self::$className = array_pop($className);
+            static::$className = array_pop($className);
         }
 
-        return self::$className;
+        return static::$className;
     }
 }

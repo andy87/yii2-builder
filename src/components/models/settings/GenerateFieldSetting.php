@@ -20,4 +20,6 @@ class GenerateFieldSetting extends BaseModel
     public ?bool $notNull = null;
     public ?bool $unique = null;
     public ?bool $foreignKey = null;
+
+
 }

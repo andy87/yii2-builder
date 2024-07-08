@@ -1,14 +1,17 @@
 <?php
 
-use andy87\yii2\builder\components\models\collections\CollectionFieldForm;
-use andy87\yii2\builder\components\models\FieldForm;
+use andy87\yii2\builder\components\models\forms\GenerateFieldForm;
 use yii\web\View;
-use andy87\yii2\builder\components\models\TableForm;
+use andy87\yii2\builder\components\models\forms\GenerateTableForm;
 
 /**
  * @var View $this
- * @var TableForm $tableForm
+ * @var GenerateTableForm $generateTableForm
  */
+
+$generateFieldForm = $generateTableForm->generateFieldForm;
+$listGenerateFieldForm = $generateTableForm->listGenerateFieldForm;
+
 
 $tdStyle = 'pl-0 pr-0 pt-1 pb-1 ';
 
@@ -16,7 +19,7 @@ $tdStyle = 'pl-0 pr-0 pt-1 pb-1 ';
 
 <div class="row " data-template="<?= __FILE__ ?>">
 
-    <table class="table fieldFormsWrapper" data-template=".fieldFormTemplate" data-container=".fieldFormsContainer" data-table-id="<?=$tableForm->id?>" >
+    <table class="table fieldFormsWrapper" data-template=".fieldFormTemplate" data-container=".fieldFormsContainer" data-table-id="<?=$generateTableForm->id?>" >
         <thead>
             <tr>
                 <th class="<?=$tdStyle?>" style="width: 15%;">name</th>
@@ -37,87 +40,85 @@ $tdStyle = 'pl-0 pr-0 pt-1 pb-1 ';
         <tbody class="fieldFormsContainer">
             <tr class="fieldFormTemplate" style="display: none">
                 <td class="<?=$tdStyle?>">
-                    <input class="form-control form-control-sm" type="text" data-name="<?=CollectionFieldForm::attrName($tableForm, FieldForm::ATTR_NAME )?>" readonly>
+                    <?= $generateFieldForm->input('text', GenerateFieldForm::ATTR_NAME, 'data-name', 'readonly' )?>
                 </td>
                 <td class="<?=$tdStyle?>">
-                    <input class="form-control form-control-sm" type="text" data-name="<?=CollectionFieldForm::attrName($tableForm, FieldForm::ATTR_COMMENT )?>">
+                    <?= $generateFieldForm->input('text', GenerateFieldForm::ATTR_COMMENT, 'data-name' )?>
                 </td>
                 <td class="<?=$tdStyle?>">
-
-                    <select class="form-control form-control-sm" data-name="<?=CollectionFieldForm::attrName($tableForm, FieldForm::ATTR_TYPE )?>">
-                        <?php foreach ( FieldForm::TYPE_LIST as $key => $name ): ?>
+                    <select class="form-control form-control-sm" <?=$generateFieldForm->attrName(GenerateFieldForm::ATTR_TYPE, 'data-name', false )?>>
+                        <?php foreach ( GenerateFieldForm::TYPE_LIST as $key => $name ): ?>
                             <option value="<?=$key?>"><?=$name?></option>
                         <?php endforeach; ?>
                     </select>
                 </td>
                 <td class="<?=$tdStyle?>">
-                    <input class="form-control form-control-sm"  type="number" data-name="<?=CollectionFieldForm::attrName($tableForm, FieldForm::ATTR_LENGTH )?>">
+                    <?= $generateFieldForm->input('number', GenerateFieldForm::ATTR_LENGTH, 'data-name' )?>
                 </td>
                 <td class="<?=$tdStyle?>">
-                    <input class="form-control form-control-sm"  type="text" data-name="<?=CollectionFieldForm::attrName($tableForm, FieldForm::ATTR_DEFAULT )?>">
-
+                    <?= $generateFieldForm->input('text', GenerateFieldForm::ATTR_DEFAULT, 'data-name' )?>
                 </td>
                 <td class="<?=$tdStyle?>">
                     <span class="input-group-text">
-                        <input class="input-group-text" type="checkbox" data-name="<?=CollectionFieldForm::attrName($tableForm, FieldForm::ATTR_NOT_NULL )?>">
+                        <?= $generateFieldForm->checkbox(GenerateFieldForm::ATTR_NOT_NULL, 'data-name' )?>
                     </span>
                 </td>
                 <td class="<?=$tdStyle?>">
                     <span class="input-group-text">
-                        <input class="input-group-text" type="checkbox" data-name="<?=CollectionFieldForm::attrName($tableForm, FieldForm::ATTR_UNIQUE )?>">
+                        <?= $generateFieldForm->checkbox(GenerateFieldForm::ATTR_UNIQUE, 'data-name' )?>
                     </span>
                 </td>
                 <td class="<?=$tdStyle?>">
                     <span class="input-group-text">
-                        <input class="input-group-text" type="checkbox" data-name="<?=CollectionFieldForm::attrName($tableForm, FieldForm::ATTR_FOREIGN_KEY )?>">
+                        <?= $generateFieldForm->checkbox(GenerateFieldForm::ATTR_FOREIGN_KEY, 'data-name' )?>
                     </span>
                 </td>
                 <td class="<?=$tdStyle?>">
-                    <button class="btn btn-sm btn-danger" style="width: 28px" type="submit" onclick="app.builder.tableRemoveRow()" data-name="<?=CollectionFieldForm::attrName($tableForm, FieldForm::ATTR_ACTION)?>" value="<?=FieldForm::ACTION_REMOVE ?>">
+                    <button class="btn btn-sm btn-danger tableRemoveRow" type="submit" onclick="app.builder.tableRemoveRow()">
                         -
                     </button>
                 </td>
             </tr>
-            <?php if ($tableForm->collectionFieldForm): ?>
-                <?php if (count($tableForm->collectionFieldForm->fieldForms)): ?>
-                    <?php foreach ($tableForm->collectionFieldForm->fieldForms as $index => $fieldForm): ?>
+            <?php if ($generateTableForm->listGenerateFieldForm): ?>
+                <?php if (count($generateTableForm->listGenerateFieldForm)): ?>
+                    <?php foreach ($generateTableForm->listGenerateFieldForm as $generateFieldForm): ?>
                         <tr>
                             <td class="<?=$tdStyle?>">
-                                <input class="form-control form-control-sm" type="text" name="<?=CollectionFieldForm::attrName($tableForm, FieldForm::ATTR_NAME, $fieldForm )?>" value="<?=$fieldForm->name?>" readonly>
+                                <?= $generateFieldForm->input('text', GenerateFieldForm::ATTR_NAME, 'name', 'readonly' )?>
                             </td>
                             <td class="<?=$tdStyle?>">
-                                <input class="form-control form-control-sm" type="text" name="<?=CollectionFieldForm::attrName($tableForm, FieldForm::ATTR_COMMENT, $fieldForm )?>" value="<?=$fieldForm->comment?>">
+                                <?= $generateFieldForm->input('text', GenerateFieldForm::ATTR_COMMENT )?>
                             </td>
                             <td class="<?=$tdStyle?>">
-                                <select class="form-control form-control-sm" name="<?=CollectionFieldForm::attrName($tableForm, FieldForm::ATTR_TYPE, $fieldForm )?>">
-                                    <?php foreach ( FieldForm::TYPE_LIST as $key => $name ): ?>
-                                        <option value="<?=$key?>" data-defaut="255" <?=( $fieldForm->type == $key ) ? 'selected' : '' ?>><?=$name?></option>
+                                <select class="form-control form-control-sm" <?=$generateFieldForm->attrName(GenerateFieldForm::ATTR_TYPE, 'name', false )?>>
+                                    <?php foreach ( GenerateFieldForm::TYPE_LIST as $key => $name ): ?>
+                                        <option value="<?=$key?>" data-defaut="255" <?=( $generateFieldForm->type == $key ) ? 'selected' : '' ?>><?=$name?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </td>
                             <td class="<?=$tdStyle?>">
-                                <input class="form-control form-control-sm"  type="text" name="<?=CollectionFieldForm::attrName($tableForm, FieldForm::ATTR_LENGTH, $fieldForm )?>" value="<?=$fieldForm->length?>">
+                                <?= $generateFieldForm->input('text', GenerateFieldForm::ATTR_LENGTH )?>
                             </td>
                             <td class="<?=$tdStyle?>">
-                                <input class="form-control form-control-sm"  type="text" name="<?=CollectionFieldForm::attrName($tableForm, FieldForm::ATTR_DEFAULT, $fieldForm )?>" value="<?=$fieldForm->default?>">
+                                <?= $generateFieldForm->input('text', GenerateFieldForm::ATTR_DEFAULT )?>
                             </td>
                             <td class="<?=$tdStyle?>">
                                 <span class="input-group-text">
-                                    <input class="input-group-text" type="checkbox" name="<?=CollectionFieldForm::attrName($tableForm, FieldForm::ATTR_NOT_NULL, $fieldForm )?>" <?=( $fieldForm->notNull) ? 'checked' : '' ?>>
+                                    <?= $generateFieldForm->checkbox(GenerateFieldForm::ATTR_NOT_NULL )?>
                                 </span>
                             </td>
                             <td class="<?=$tdStyle?>">
                                 <span class="input-group-text">
-                                    <input class="input-group-text" type="checkbox" name="<?=CollectionFieldForm::attrName($tableForm, FieldForm::ATTR_UNIQUE, $fieldForm )?>" <?=( $fieldForm->unique) ? 'checked' : '' ?>>
+                                    <?= $generateFieldForm->checkbox(GenerateFieldForm::ATTR_UNIQUE )?>
                                 </span>
                             </td>
                             <td class="<?=$tdStyle?>">
                                 <span class="input-group-text">
-                                    <input class="input-group-text" type="checkbox" name="<?=CollectionFieldForm::attrName($tableForm, FieldForm::ATTR_FOREIGN_KEY, $fieldForm )?>" <?=( $fieldForm->foreignKey) ? 'checked' : '' ?>>
+                                    <?= $generateFieldForm->checkbox(GenerateFieldForm::ATTR_FOREIGN_KEY )?>
                                 </span>
                             </td>
                             <td class="<?=$tdStyle?>">
-                                <button class="btn btn-sm btn-danger" style="width: 28px" type="submit" onclick="app.builder.tableRemoveRow()" name="<?=CollectionFieldForm::attrName($tableForm, FieldForm::ATTR_ACTION, $fieldForm )?>" value="<?=FieldForm::ACTION_REMOVE ?>">
+                                <button class="btn btn-sm btn-danger tableRemoveRow" type="submit" onclick="app.builder.tableRemoveRow()">
                                     -
                                 </button>
                             </td>

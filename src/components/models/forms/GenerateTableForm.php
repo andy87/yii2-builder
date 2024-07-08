@@ -31,6 +31,9 @@ class GenerateTableForm extends GenerateTableSetting
 
     /** @var GenerateModelForm */
     public GenerateModelForm $generateModelForm;
+    public GenerateFieldForm $generateFieldForm;
+
+    public GenerateFileForm $generateFileForm;
 
     /** @var GenerateFieldForm[] */
     public array $listGenerateFieldForm = [];
@@ -50,6 +53,13 @@ class GenerateTableForm extends GenerateTableSetting
         $this->id = self::NEW;
 
         $this->generateModelForm = new GenerateModelForm;
+        $this->generateModelForm->generateTableForm = $this;
+
+        $this->generateFieldForm = new GenerateFieldForm;
+        $this->generateFieldForm->generateTableForm = $this;
+
+        $this->generateFileForm = new GenerateFileForm;
+        $this->generateFileForm->generateTableForm = $this;
     }
 
     /**

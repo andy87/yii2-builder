@@ -4,6 +4,9 @@ namespace andy87\yii2\builder\components\services;
 
 use andy87\yii2\builder\components\models\collections\CollectionGenerateTableSettings;
 use andy87\yii2\builder\components\models\forms\GenerateFileForm;
+use andy87\yii2\builder\components\models\forms\GenerateModelForm;
+use andy87\yii2\builder\components\models\settings\FileSettings;
+use andy87\yii2\builder\components\models\settings\GenerateFileSetting;
 use Yii;
 use Exception;
 use andy87\yii2\builder\components\Builder;
@@ -53,11 +56,18 @@ class FormService
         }
     }
 
-    public function getCollectionGenerateTableForm(Builder $param): CollectionGenerateTableForm
+    /**
+     * @param Builder $builder
+     *
+     * @return CollectionGenerateTableForm
+     */
+    public function getCollectionGenerateTableForm(Builder $builder): CollectionGenerateTableForm
     {
         $collectionGenerateTableForm = new CollectionGenerateTableForm();
 
-        $collectionGenerateTableForm->generateTableForm = $this->getBlankGenerateTableForm($param);
+        $collectionGenerateTableForm->generateTableForm = $this->getBlankGenerateTableForm($builder);
+
+        $collectionGenerateTableForm->listGenerateTableForm = $this->getListGenerateTableForm($builder);
 
         return $collectionGenerateTableForm;
     }
@@ -71,9 +81,32 @@ class FormService
     {
         $generateTableForm = $this->getModelGenerateTableForm();
 
-        $generateTableForm->listGenerateFileForm = $this->prepareListGenerateFileForm($builder->listGenerateFileSetting);
+        $generateTableForm->listGenerateFileForm = $this->getListGenerateFileForm($builder->listGenerateFileSetting);
 
         return $generateTableForm;
+    }
+
+    /**
+     * @param Builder $builder
+     *
+     * @return GenerateTableForm[]
+     */
+    private function getListGenerateTableForm(Builder $builder): array
+    {
+        $listGenerateTableForm = [];
+
+        $listGenerateTableSetting = $builder->collectionGenerateTableSettings->listGenerateTableSetting;
+
+        foreach ( $listGenerateTableSetting as $generateTableSetting )
+        {
+            $generateTableForm = new GenerateTableForm();
+
+            $generateTableForm->setAttributes($generateTableSetting->attributes);
+
+            if ( $generateTableForm->validate() ) $listGenerateTableForm[] = $generateTableForm;
+        }
+
+        return $listGenerateTableForm;
     }
 
     /**
@@ -81,26 +114,26 @@ class FormService
      */
     public function getModelGenerateTableForm(): GenerateTableForm
     {
-        return new GenerateTableForm();
+        return new GenerateTableForm;
     }
 
     /**
-     * @param array $listGenerateFileSetting
+     * @param FileSettings[] $listFileSetting
      *
      * @return GenerateFileForm[]
      */
-    private function prepareListGenerateFileForm(array $listGenerateFileSetting): array
+    private function getListGenerateFileForm(array $listFileSetting): array
     {
         $listGenerateFileForm = [];
 
-        /*foreach ( $listGenerateFileSetting as $generateFileSetting )
+        foreach ( $listFileSetting as $filePath => $FileSettings )
         {
             $generateFileForm = new GenerateFileForm();
+            $generateFileForm->id = $filePath;
+            $generateFileForm->path = $filePath;
 
-            $generateFileForm->setAttributes($generateFileSetting);
-
-            $listGenerateFileForm[] = $generateFileForm;
-        }*/
+            if ($generateFileForm->validate()) $listGenerateFileForm[] = $generateFileForm;
+        }
 
         return $listGenerateFileForm;
     }
@@ -118,4 +151,5 @@ class FormService
 
         return $collectionGenerateTableSettings;
     }
+
 }

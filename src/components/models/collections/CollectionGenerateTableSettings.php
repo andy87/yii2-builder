@@ -2,7 +2,6 @@
 
 namespace andy87\yii2\builder\components\models\collections;
 
-use andy87\yii2\builder\components\models\forms\GenerateTableForm;
 use andy87\yii2\builder\components\models\settings\GenerateTableSetting;
 
 /**

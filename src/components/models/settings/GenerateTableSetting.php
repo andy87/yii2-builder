@@ -2,7 +2,6 @@
 
 namespace andy87\yii2\builder\components\models\settings;
 
-use yii\bootstrap5\Html;
 use andy87\yii2\builder\components\base\BaseModel;
 
 /**
@@ -17,9 +16,9 @@ class GenerateTableSetting extends BaseModel
 
     public const ATTR_GENERATE_MODEL_SETTING = 'generateModelSetting';
 
-    public const ATTR_GENERATE_FIELD_SETTING = 'generateFieldSetting';
+    public const ATTR_LIST_GENERATE_FIELD_SETTING = 'listGenerateFieldSetting';
 
-    public const ATTR_GENERATE_FILE_SETTING = 'generateFileSetting';
+    public const ATTR_LIST_GENERATE_FILE_SETTING = 'listGenerateFileSetting';
 
 
     public static ?string $className = null;
@@ -31,10 +30,10 @@ class GenerateTableSetting extends BaseModel
     public ?GenerateModelSetting $generateModelSetting = null;
 
     /** @var GenerateFieldSetting[]  */
-    public array $collectionGenerateFieldSetting = [];
+    public array $listGenerateFieldSetting = [];
 
     /** @var GenerateFileSetting[]  */
-    public array $collectionGenerateFileSetting = [];
+    public array $listGenerateFileSetting = [];
 
 
 
@@ -57,8 +56,8 @@ class GenerateTableSetting extends BaseModel
             [[self::ATTR_TABLE_NAME], 'required'],
             [[self::ATTR_TABLE_NAME, self::ATTR_TABLE_COMMENT], 'string'],
             [[self::ATTR_GENERATE_MODEL_SETTING], 'each', 'rule' => ['safe']],
-            [[self::ATTR_GENERATE_FIELD_SETTING], 'each', 'rule' => ['class', GenerateFieldSetting::class]],
-            [[self::ATTR_GENERATE_FILE_SETTING], 'each', 'rule' => ['class', GenerateFileSetting::class]],
+            [[self::ATTR_LIST_GENERATE_FIELD_SETTING], 'each', 'rule' => ['class', GenerateFieldSetting::class]],
+            [[self::ATTR_LIST_GENERATE_FILE_SETTING], 'each', 'rule' => ['class', GenerateFileSetting::class]],
         ];
     }
 }

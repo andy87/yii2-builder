@@ -62,6 +62,8 @@ class Builder extends Generator
      * @var GenerateFileSetting[]
      */
     public array $listGenerateFileSetting = [];
+
+
     /**
      * @var CollectionGenerateTableSettings
      */
@@ -153,13 +155,11 @@ class Builder extends Generator
     {
         $formService = FormService::getInstance();
 
-
         $formService->requestHandler($this);
 
         $this->collectionGenerateTableSettings = $formService->getCollectionGenerateTableSettings();
 
         $this->collectionGenerateTableForm = $formService->getCollectionGenerateTableForm($this);
-
     }
 
     /**

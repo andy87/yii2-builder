@@ -11,12 +11,6 @@ use andy87\yii2\builder\components\models\forms\GenerateTableForm;
 
 $generateModelForm = $generateTableForm->generateModelForm;
 
-$values = [
-    $generateTableForm::ATTR_TABLE_NAME => ($generateTableForm?->{$generateTableForm::ATTR_TABLE_NAME} ?? ''),
-    $generateModelForm::ATTR_SINGULAR => ($generateTableForm->generateModelForm?->{$generateModelForm::ATTR_SINGULAR} ?? ''),
-    $generateModelForm::ATTR_PLURAL => ($generateTableForm->generateModelForm?->{$generateModelForm::ATTR_PLURAL} ?? ''),
-];
-
 ?>
 
 <div class="form" data-template="<?= __FILE__ ?>">
@@ -26,12 +20,12 @@ $values = [
                 <div class="form-group">
                     <label class="control-label">
                         <?= $generateTableForm->getAttributeLabel($generateTableForm::ATTR_TABLE_NAME) ?>
-                        <?= $generateTableForm::constructInput('text', $generateTableForm::ATTR_TABLE_NAME, $values) ?>
+                        <?= $generateTableForm->constructInput('text', $generateTableForm::ATTR_TABLE_NAME) ?>
                     </label>
                 </div>
             </div>
         <?php else: ?>
-            <?= $generateTableForm::constructInput('hidden', $generateTableForm::ATTR_TABLE_NAME, $values) ?>
+            <?= $generateTableForm->constructInput('hidden', $generateTableForm::ATTR_TABLE_NAME) ?>
         <?php endif; ?>
     </div>
     <div class="row">
@@ -39,7 +33,7 @@ $values = [
             <div class="form-group">
                 <label class="control-label">
                     <?=$generateModelForm->getAttributeLabel($generateModelForm::ATTR_SINGULAR)?>
-                    <?= $generateTableForm::constructInput('text', $generateModelForm::ATTR_SINGULAR, $values) ?>
+                    <?= $generateTableForm->constructInput('text', $generateModelForm::ATTR_SINGULAR) ?>
                 </label>
             </div>
         </div>
@@ -47,13 +41,13 @@ $values = [
             <div class="form-group">
                 <label class="control-label">
                     <?=$generateModelForm->getAttributeLabel($generateModelForm::ATTR_PLURAL)?>
-                    <?= $generateTableForm::constructInput('text', $generateModelForm::ATTR_PLURAL, $values) ?>
+                    <?= $generateTableForm->constructInput('text', $generateModelForm::ATTR_PLURAL) ?>
                 </label>
             </div>
         </div>
     </div>
 
-    <?= '';//$this->render('form-fields', [ 'generateTableForm' => $generateTableForm ]); ?>
+    <?= $this->render('form-fields', [ 'generateTableForm' => $generateTableForm ]); ?>
 
     <?= '';//$this->render('form-files', [ 'generateTableForm' => $generateTableForm ]); ?>
 
@@ -61,7 +55,7 @@ $values = [
         <?php if ( $generateTableForm->id !== $generateTableForm::NEW ): ?>
             <div class="col-12" style="text-align: right">
 
-                <?= $generateTableForm::constructActionButton('Добавить', [
+                <?= $generateTableForm->constructActionButton('Добавить', [
                     'type' => 'submit',
                     'class' => 'btn btn-danger',
                     'value' => $generateTableForm::ACTION_ADD,

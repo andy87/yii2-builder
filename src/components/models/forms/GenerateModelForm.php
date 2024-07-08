@@ -12,5 +12,6 @@ use andy87\yii2\builder\components\models\settings\GenerateModelSetting;
  */
 class GenerateModelForm extends GenerateModelSetting
 {
+    public GenerateTableForm $generateTableForm;
 
 }

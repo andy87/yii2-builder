@@ -2,16 +2,16 @@
 
 namespace andy87\yii2\builder\components\models\forms;
 
-use yii\base\Model;
 use andy87\yii2\builder\components\helpers\Library;
 use andy87\yii2\builder\components\models\settings\FileSettings;
+use andy87\yii2\builder\components\models\settings\GenerateFileSetting;
 
 /**
  * Class GenerateFileForm
  *
  * @package andy87\yii2\builder\components\models\forms
  */
-class GenerateFileForm extends Model
+class GenerateFileForm extends GenerateFileSetting
 {
     public const ATTR_ID = 'id';
     public const ATTR_GENERATE = 'generate';
@@ -25,6 +25,8 @@ class GenerateFileForm extends Model
     public bool $generate = true;
 
     public string $path;
+
+    public GenerateTableForm $generateTableForm;
 
     public FileSettings $settings;
 

@@ -11,3 +11,7 @@
     height: 256px;
     overflow: auto;
 }
+
+.tableRemoveRow{
+    width: 28px;
+}
