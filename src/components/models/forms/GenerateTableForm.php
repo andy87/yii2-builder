@@ -54,13 +54,12 @@ class GenerateTableForm extends GenerateTableSetting
         $this->id = self::NEW;
 
         $this->generateModelForm = new GenerateModelForm;
-        $this->generateModelForm->generateTableForm = $this;
+        $this->generateModelForm->table_form_id = $this->id;
 
         $this->generateFieldForm = new GenerateFieldForm;
-        $this->generateFieldForm->generateTableForm = $this;
+        $this->generateFieldForm->table_form_id = $this->id;
 
         $this->generateFileForm = new GenerateFileForm;
-        $this->generateFileForm->generateTableForm = $this;
     }
 
     /**

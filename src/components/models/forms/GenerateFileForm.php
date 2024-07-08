@@ -5,6 +5,7 @@ namespace andy87\yii2\builder\components\models\forms;
 use andy87\yii2\builder\components\helpers\Library;
 use andy87\yii2\builder\components\models\settings\FileSettings;
 use andy87\yii2\builder\components\models\settings\GenerateFileSetting;
+use yii\bootstrap5\Html;
 
 /**
  * Class GenerateFileForm
@@ -26,8 +27,6 @@ class GenerateFileForm extends GenerateFileSetting
 
     public string $path;
 
-    public GenerateTableForm $generateTableForm;
-
     public FileSettings $settings;
 
 
@@ -43,5 +42,20 @@ class GenerateFileForm extends GenerateFileSetting
             [[self::ATTR_GENERATE], 'boolean'],
             [[self::ATTR_PATH], 'string'],
         ];
+    }
+
+    /**
+     * @param string $file_id
+     * @param GenerateFileForm $generateFileForm
+     * @param string $index
+     * @return string
+     */
+    public function checkbox( GenerateFileForm $generateFileForm, string $index): string
+    {
+        $className = self::getClassName();
+
+        $name = "name=\"{$className}[$index][$generateFileForm->id]\"";
+
+        return Html::checkbox($name, $generateFileForm->generate );
     }
 }

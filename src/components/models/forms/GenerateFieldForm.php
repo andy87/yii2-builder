@@ -35,7 +35,7 @@ class GenerateFieldForm extends GenerateFieldSetting
     ];
 
 
-    public GenerateTableForm $generateTableForm;
+    public string $table_form_id;
 
 
     /** @var string Column name */
@@ -74,9 +74,7 @@ class GenerateFieldForm extends GenerateFieldSetting
     {
         $className = static::getClassName();
 
-        $index = $this->generateTableForm->id;
-
-        $value = "{$className}[$index][$attr]";
+        $value = "{$className}[$this->table_form_id][$attr]";
 
         return $isOnlyValue ? $value : "$naming=\"$value\"";
     }

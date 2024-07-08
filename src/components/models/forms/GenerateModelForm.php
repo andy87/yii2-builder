@@ -14,4 +14,6 @@ class GenerateModelForm extends GenerateModelSetting
 {
     public GenerateTableForm $generateTableForm;
 
+    public string $table_form_id;
+
 }

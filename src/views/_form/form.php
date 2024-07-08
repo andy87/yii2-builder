@@ -49,7 +49,7 @@ $generateModelForm = $generateTableForm->generateModelForm;
 
     <?= $this->render('form-fields', [ 'generateTableForm' => $generateTableForm ]); ?>
 
-    <?= '';//$this->render('form-files', [ 'generateTableForm' => $generateTableForm ]); ?>
+    <?= $this->render('form-files', [ 'generateTableForm' => $generateTableForm ]); ?>
 
     <div class="row">
         <?php if ( $generateTableForm->id === $generateTableForm::NEW ): ?>

@@ -118,15 +118,15 @@ class FormService
     }
 
     /**
-     * @param FileSettings[] $listFileSetting
+     * @param GenerateFileSetting[] $listGenerateFileSetting
      *
      * @return GenerateFileForm[]
      */
-    private function getListGenerateFileForm(array $listFileSetting): array
+    private function getListGenerateFileForm(array $listGenerateFileSetting): array
     {
         $listGenerateFileForm = [];
 
-        foreach ( $listFileSetting as $filePath => $FileSettings )
+        foreach ( $listGenerateFileSetting as $filePath => $FileSettings )
         {
             $generateFileForm = new GenerateFileForm();
             $generateFileForm->id = $filePath;
