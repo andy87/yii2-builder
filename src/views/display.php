@@ -25,4 +25,13 @@ echo Accordion::widget([
 
 echo '<br>';
 
-?>
+if (count($generator->collectionGenerateTableForm->listGenerateTableForm)) : ?>
+    <div class="col-12" style="text-align: right">
+
+        <?= $blankGenerateTableForm->constructActionButton('Сохранить', [
+            'type' => 'submit',
+            'class' => 'btn btn-success',
+            'value' => $blankGenerateTableForm::ACTION_ADD,
+        ])?>
+    </div>
+<?php endif; ?>

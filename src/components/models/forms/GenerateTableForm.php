@@ -14,6 +14,7 @@ class GenerateTableForm extends GenerateTableSetting
     public const NEW = '0';
 
     public const ACTION_ADD = 'add';
+    public const ACTION_SAVE = 'save';
     public const ACTION_DELETE = 'delete';
 
 

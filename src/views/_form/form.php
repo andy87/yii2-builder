@@ -52,13 +52,26 @@ $generateModelForm = $generateTableForm->generateModelForm;
     <?= '';//$this->render('form-files', [ 'generateTableForm' => $generateTableForm ]); ?>
 
     <div class="row">
-        <?php if ( $generateTableForm->id !== $generateTableForm::NEW ): ?>
+        <?php if ( $generateTableForm->id === $generateTableForm::NEW ): ?>
+            <div class="col-12" style="text-align: right">
+
+                <?= $generateTableForm->constructActionButton('Добавить', [
+                    'type' => 'submit',
+                    'class' => 'btn btn-success',
+                    'value' => $generateTableForm::ACTION_ADD,
+                    'data-confirm' => "Требуется подтверждение"
+                ])?>
+
+            </div>
+
+        <?php else: ?>
+
             <div class="col-12" style="text-align: right">
 
                 <?= $generateTableForm->constructActionButton('Добавить', [
                     'type' => 'submit',
                     'class' => 'btn btn-danger',
-                    'value' => $generateTableForm::ACTION_ADD,
+                    'value' => $generateTableForm::ACTION_DELETE,
                     'data-confirm' => "Вы уверены, что хотите добавить таблицу `$generateTableForm->tableName`?"
                 ])?>
 
