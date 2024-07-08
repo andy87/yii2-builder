@@ -11,7 +11,11 @@ use andy87\yii2\builder\components\models\settings\GenerateTableSetting;
  */
 class GenerateTableForm extends GenerateTableSetting
 {
-    public const ID_NEW = '0';
+    public const NEW = '0';
+
+    public const ACTION_ADD = 'add';
+    public const ACTION_DELETE = 'delete';
+
 
     public const ATTR_GENERATE_MODEL_FORM = 'generateModelForm';
 
@@ -21,7 +25,7 @@ class GenerateTableForm extends GenerateTableSetting
 
 
         /** @var string  */
-    public string $id = self::ID_NEW;
+    public string $id = self::NEW;
 
 
 
@@ -43,7 +47,7 @@ class GenerateTableForm extends GenerateTableSetting
     {
         parent::init();
 
-        $this->id = self::ID_NEW;
+        $this->id = self::NEW;
 
         $this->generateModelForm = new GenerateModelForm;
     }

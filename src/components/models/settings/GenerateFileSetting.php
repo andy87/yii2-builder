@@ -2,7 +2,7 @@
 
 namespace andy87\yii2\builder\components\models\settings;
 
-use yii\base\Model;
+use andy87\yii2\builder\components\base\BaseModel;
 use andy87\yii2\builder\components\helpers\Library;
 
 /**
@@ -10,7 +10,7 @@ use andy87\yii2\builder\components\helpers\Library;
  *
  * @package andy87\yii2\builder\components\models\settings
  */
-class GenerateFileSetting extends Model
+class GenerateFileSetting extends BaseModel
 {
     /** @var string|int ID */
     public string|int $id = Library::COMMON_MODEL_SOURCES;

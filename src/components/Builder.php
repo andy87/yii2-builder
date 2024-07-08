@@ -4,7 +4,6 @@ namespace andy87\yii2\builder\components;
 
 use andy87\yii2\builder\components\models\collections\CollectionGenerateTableForm;
 use andy87\yii2\builder\components\models\collections\CollectionGenerateTableSettings;
-use andy87\yii2\builder\components\models\forms\GenerateTableForm;
 use andy87\yii2\builder\components\models\settings\FileSettings;
 use andy87\yii2\builder\components\models\settings\GenerateFileSetting;
 use Exception;
@@ -154,11 +153,13 @@ class Builder extends Generator
     {
         $formService = FormService::getInstance();
 
-        $this->collectionGenerateTableForm = $formService->getCollectionGenerateTableForm($this);
 
         $formService->requestHandler($this);
 
-        $this->collectionGenerateTableSettings = $formService->getCollectionGenerateTableSettings($this);
+        $this->collectionGenerateTableSettings = $formService->getCollectionGenerateTableSettings();
+
+        $this->collectionGenerateTableForm = $formService->getCollectionGenerateTableForm($this);
+
     }
 
     /**

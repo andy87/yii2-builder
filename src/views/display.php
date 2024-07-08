@@ -1,5 +1,6 @@
 <?php
 
+use andy87\yii2\builder\components\services\AccordionService;
 use yii\web\View;
 use yii\bootstrap5\Accordion;
 use andy87\yii2\builder\components\Builder;
@@ -12,15 +13,17 @@ use andy87\yii2\builder\components\assets\BuilderAsset;
 
 BuilderAsset::register($this);
 
+$blankGenerateTableForm = $generator->collectionGenerateTableForm->generateTableForm;
+
 echo $this->render('_form/form', [
-    'tableForm' => $generator->tableForm
+    'generateTableForm' => $blankGenerateTableForm
 ]);
 
 echo '<hr>';
 
 //фвв ё
 echo Accordion::widget([
-    'items' => $generator->accordionService->getAccordionItems($generator->collectionTableForm)
+    'items' => AccordionService::getInstance()->getAccordionItems($generator->collectionGenerateTableForm)
 ]);
 
 echo '<br>';

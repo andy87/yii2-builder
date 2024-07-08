@@ -2,14 +2,14 @@
 
 namespace andy87\yii2\builder\components\models\settings;
 
-use yii\base\Model;
+use andy87\yii2\builder\components\base\BaseModel;
 
 /**
  * Class GenerateFieldSetting
  *
  * @package andy87\yii2\builder\components\models\settings
  */
-class GenerateFieldSetting extends Model
+class GenerateFieldSetting extends BaseModel
 {
     /** @var string Column name */
     public string $name;

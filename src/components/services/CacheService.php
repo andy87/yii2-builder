@@ -74,13 +74,13 @@ class CacheService
      *
      * @return GenerateTableSetting[]
      */
-    public function getCollectionGenerateTableSettings(): array
+    public function getListGenerateTableSettings(): array
     {
-        $files = glob($this->pathCache . '/*.' . $this->extension );
+        $pathList = glob($this->pathCache . '/*.' . $this->extension );
 
         $collectionGenerateTableSettings = [];
 
-        foreach ($files as $path)
+        foreach ($pathList as $path)
         {
             if (in_array($path,['.','..']) ) continue;
 
@@ -88,10 +88,10 @@ class CacheService
             {
                 $content = file_get_contents($path);
 
-                /** @var GenerateTableSetting $generateTableForm */
+                /** @var GenerateTableSetting $generateTableSettings */
                 $generateTableSettings = unserialize($content);
 
-                $collectionGenerateTableSettings[$generateTableSettings->] = unserialize($content);
+                $collectionGenerateTableSettings[$generateTableSettings->tableName] = $generateTableSettings;
             }
         }
 
@@ -110,31 +110,31 @@ class CacheService
 
 
     /**
-     * @param TableForm $tableForm
+     * @param GenerateTableSetting $generateTableSetting
      *
      * @return void
      */
-    private function addTableForm(TableForm $tableForm): void
+    private function create(GenerateTableSetting $generateTableSetting): void
     {
-        $tableForm->id = $tableForm->tableName;
+        $generateTableSetting->id = $generateTableSetting->tableName;
 
-        $path = $this->cacheFilePath($tableForm->tableName);
+        $path = $this->cacheFilePath($generateTableSetting->tableName);
 
-        $content = serialize($tableForm);
+        $content = serialize($generateTableSetting);
 
         (bool) file_put_contents($path, $content);
     }
 
     /**
-     * @param TableForm $tableForm
+     * @param GenerateTableSetting $generateTableSetting
      *
      * @return void
      */
-    private function updateCTableForm(TableForm $tableForm): void
+    private function update(GenerateTableSetting $generateTableSetting): void
     {
-        $this->removeTableForm($tableForm->tableName);
+        $this->remove($generateTableSetting->tableName);
 
-        $this->addTableForm($tableForm);
+        $this->create($generateTableSetting);
     }
 
     /**
@@ -142,7 +142,7 @@ class CacheService
      *
      * @return void
      */
-    private function removeTableForm(string $name): void
+    private function remove(string $name): void
     {
         $path = $this->cacheFilePath($name);
 

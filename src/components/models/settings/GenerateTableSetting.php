@@ -2,14 +2,15 @@
 
 namespace andy87\yii2\builder\components\models\settings;
 
-use yii\base\Model;
+use yii\bootstrap5\Html;
+use andy87\yii2\builder\components\base\BaseModel;
 
 /**
  * Class GenerateTableSetting
  *
  * @package andy87\yii2\builder\components\models\settings
  */
-class GenerateTableSetting extends Model
+class GenerateTableSetting extends BaseModel
 {
     public const ATTR_TABLE_NAME = 'tableName';
     public const ATTR_TABLE_COMMENT = 'tableComment';
@@ -19,6 +20,9 @@ class GenerateTableSetting extends Model
     public const ATTR_GENERATE_FIELD_SETTING = 'generateFieldSetting';
 
     public const ATTR_GENERATE_FILE_SETTING = 'generateFileSetting';
+
+
+    public static ?string $className = null;
 
     public string $tableName;
 

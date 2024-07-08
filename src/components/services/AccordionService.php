@@ -2,11 +2,11 @@
 
 namespace andy87\yii2\builder\components\services;
 
-use andy87\yii2\builder\components\Builder;
-use Exception;
 use Yii;
-use andy87\yii2\builder\components\models\TableForm;
-use andy87\yii2\builder\components\models\collections\CollectionTableForm;
+use Exception;
+use andy87\yii2\builder\components\Builder;
+use andy87\yii2\builder\components\models\collections\CollectionGenerateTableForm;
+use andy87\yii2\builder\components\models\forms\GenerateTableForm;
 
 /**
  * Class AccordionService
@@ -32,19 +32,19 @@ class AccordionService
     }
 
     /**
-     * @param CollectionTableForm $collectionTableForm
+     * @param CollectionGenerateTableForm $collectionGenerateTableForm
      *
      * @return array
      */
-    public function getAccordionItems(CollectionTableForm $collectionTableForm): array
+    public function getAccordionItems(CollectionGenerateTableForm $collectionGenerateTableForm): array
     {
         $accordionItems = [];
 
-        foreach ( $collectionTableForm->tableForms as $fileName => $tableForm )
+        foreach ( $collectionGenerateTableForm->listGenerateTableForm as $tableName => $generateTableForm )
         {
             $accordionItems[] = [
-                'label' => $fileName,
-                'content' => $this->renderAccordionItem($tableForm),
+                'label' => $tableName,
+                'content' => $this->renderAccordionItem($generateTableForm),
             ];
         }
 
@@ -52,14 +52,14 @@ class AccordionService
     }
 
     /**
-     * @param TableForm $tableForm
+     * @param GenerateTableForm $generateTableForm
      *
      * @return string
      */
-    private function renderAccordionItem(TableForm $tableForm): string
+    private function renderAccordionItem(GenerateTableForm $generateTableForm): string
     {
         $templatePath = Yii::getAlias($this->view) . '/accordion-item.php';
 
-        return Yii::$app->view->renderFile( $templatePath, [ 'tableForm' => $tableForm ]);
+        return Yii::$app->view->renderFile( $templatePath, [ 'generateTableForm' => $generateTableForm ]);
     }
 }
