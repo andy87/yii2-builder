@@ -15,3 +15,26 @@
 .tableRemoveRow{
     width: 28px;
 }
+
+.fieldFormsWrapper .btn-svg {
+    padding: 2px;
+    text-align: center;
+    width: 26px;
+    height: 26px;
+}
+
+.fieldFormsWrapper .btn-svg SVG {
+    width: 20px;
+    height: 20px;
+}
+.tableRemoveRow.btn-svg {
+    width: 24px;
+    height: 24px;
+}
+.tableRemoveRow.btn-svg SVG {
+    width: 18px;
+    height: 18px;
+}
+.ui-sortable-helper .tableRemoveRow.btn-svg {
+    float: left;
+}

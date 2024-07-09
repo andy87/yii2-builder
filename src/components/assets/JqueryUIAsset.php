@@ -9,21 +9,17 @@ use yii\web\AssetBundle;
  *
  * @package andy87\yii2\builder\components\assets
  */
-class BuilderAsset extends AssetBundle
+class JqueryUIAsset extends AssetBundle
 {
     public $sourcePath = __DIR__ . '/../../static';
 
-    public $css = [
-        'css/builder.css',
-    ];
+    public $css = [];
 
     public $js = [
-        'js/builder.js',
+        'js/jquery-ui.js',
     ];
 
     public $depends = [
-        JqueryUIAsset::class,
-        \yii\web\YiiAsset::class,
-        \yii\bootstrap5\BootstrapAsset::class,
+        \yii\web\JqueryAsset::class,
     ];
 }

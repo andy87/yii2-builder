@@ -23,15 +23,16 @@ class GenerateFieldForm extends GenerateFieldSetting
 
 
     public const TYPE_LIST = [
-        'string' => 'Строка',
-        'text' => 'Текст',
+        'string' => 'Строка (255)',
+        'text' => 'Текст (255+)',
         'integer' => 'Число',
         'float' => 'Дробное число',
-        'boolean' => 'Логическое',
+        'bool' => 'Логическое',
         'date' => 'Дата',
         'time' => 'Время',
         'dateTime' => 'Дата и время',
         'timestamp' => 'Метка времени',
+        'json' => 'JSON',
     ];
 
 
@@ -116,6 +117,10 @@ class GenerateFieldForm extends GenerateFieldSetting
      */
     public function checkbox( string $attr, string $naming = 'name'): string
     {
+        $options = [
+            'class' => 'input-group-text',
+        ];
+
         $name = static::attrName($attr, $naming);
 
         if ( $naming === 'data-name'  )
@@ -125,10 +130,6 @@ class GenerateFieldForm extends GenerateFieldSetting
         }
 
         $value = $this->{$attr} ?? null;
-
-        $options = [
-            'class' => 'input-group-text',
-        ];
 
         return Html::checkbox($name, $value, $options );
     }
