@@ -11,8 +11,10 @@ use yii\{ base\Model, bootstrap5\Html };
  */
 class BaseModel extends Model
 {
-    /** @var ?string  */
-    public static ?string $className = null;
+    /** @var array */
+    public static array $className = [];
+
+
 
     /**
      * @param string $type
@@ -23,9 +25,9 @@ class BaseModel extends Model
      */
     public function constructInput( string $type, string $attr, array $options = []): string
     {
-        $className = static::getClassName();
+        $className = static::getClassName(static::class);
 
-        $name = "name=\"{$className}[$attr]\"";
+        $name = "{$className}[$attr]";
 
         $value = $this->{$attr} ?? null;
 
@@ -44,7 +46,7 @@ class BaseModel extends Model
      */
     public function constructActionButton(string $text, array $options = []): string
     {
-        $className = static::getClassName();
+        $className = static::getClassName(static::class);
 
         $options = array_merge($options, [
             'name' => "{$className}[action]"
@@ -54,17 +56,17 @@ class BaseModel extends Model
     }
 
     /**
+     * @param string $class
+     *
      * @return string
      */
-    protected static function getClassName(): string
+    protected static function getClassName( string $class ): string
     {
-        if ( static::$className === null ) {
-            $className = static::class;
-            $className = get_class(new $className);
-            $className = explode('\\', $className);
-            static::$className = array_pop($className);
+        if ( !isset(static::$className[$class]) ) {
+            $className = explode('\\', $class);
+            static::$className[$class] = array_pop($className);
         }
 
-        return static::$className;
+        return static::$className[$class];
     }
 }

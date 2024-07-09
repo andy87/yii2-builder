@@ -33,7 +33,7 @@ $generateModelForm = $generateTableForm->generateModelForm;
             <div class="form-group">
                 <label class="control-label">
                     <?=$generateModelForm->getAttributeLabel($generateModelForm::ATTR_SINGULAR)?>
-                    <?= $generateTableForm->constructInput('text', $generateModelForm::ATTR_SINGULAR) ?>
+                    <?= $generateModelForm->constructInput('text', $generateModelForm::ATTR_SINGULAR) ?>
                 </label>
             </div>
         </div>
@@ -41,7 +41,7 @@ $generateModelForm = $generateTableForm->generateModelForm;
             <div class="form-group">
                 <label class="control-label">
                     <?=$generateModelForm->getAttributeLabel($generateModelForm::ATTR_PLURAL)?>
-                    <?= $generateTableForm->constructInput('text', $generateModelForm::ATTR_PLURAL) ?>
+                    <?= $generateModelForm->constructInput('text', $generateModelForm::ATTR_PLURAL) ?>
                 </label>
             </div>
         </div>

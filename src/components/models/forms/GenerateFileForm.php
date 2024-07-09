@@ -52,9 +52,9 @@ class GenerateFileForm extends GenerateFileSetting
      */
     public function checkbox( GenerateFileForm $generateFileForm, string $index): string
     {
-        $className = self::getClassName();
+        $className = self::getClassName(static::class);
 
-        $name = "name=\"{$className}[$index][$generateFileForm->id]\"";
+        $name = "{$className}[$generateFileForm->id]";
 
         return Html::checkbox($name, $generateFileForm->generate );
     }

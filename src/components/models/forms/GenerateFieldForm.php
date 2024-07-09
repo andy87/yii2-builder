@@ -30,7 +30,7 @@ class GenerateFieldForm extends GenerateFieldSetting
         'boolean' => 'Логическое',
         'date' => 'Дата',
         'time' => 'Время',
-        'datetime' => 'Дата и время',
+        'dateTime' => 'Дата и время',
         'timestamp' => 'Метка времени',
     ];
 
@@ -72,9 +72,9 @@ class GenerateFieldForm extends GenerateFieldSetting
      */
     public function attrName(string $attr, string $naming = 'name', bool $isOnlyValue = true): string
     {
-        $className = static::getClassName();
+        $className = static::getClassName(static::class);
 
-        $value = "{$className}[$this->table_form_id][$attr]";
+        $value = "{$className}[0][$attr]";
 
         return $isOnlyValue ? $value : "$naming=\"$value\"";
     }
@@ -118,7 +118,7 @@ class GenerateFieldForm extends GenerateFieldSetting
     {
         $name = static::attrName($attr, $naming);
 
-        if ( $naming !== 'name'  )
+        if ( $naming === 'data-name'  )
         {
             $options[$naming] = $name;
             $name = null;

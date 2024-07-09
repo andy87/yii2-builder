@@ -21,8 +21,6 @@ class GenerateTableSetting extends BaseModel
     public const ATTR_LIST_GENERATE_FILE_SETTING = 'listGenerateFileSetting';
 
 
-    public static ?string $className = null;
-
     public string $tableName;
 
     public ?string $tableComment = null;
