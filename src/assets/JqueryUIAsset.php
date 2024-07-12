@@ -1,8 +1,8 @@
 <?php
 
-namespace andy87\yii2\builder\components\assets;
+namespace andy87\yii2\builder\assets;
 
-use yii\web\AssetBundle;
+use yii\web\{ JqueryAsset, AssetBundle };
 
 /**
  * Class `BuilderAsset`
@@ -11,7 +11,7 @@ use yii\web\AssetBundle;
  */
 class JqueryUIAsset extends AssetBundle
 {
-    public $sourcePath = __DIR__ . '/../../static';
+    public $sourcePath = __DIR__ . '/../static';
 
     public $css = [];
 
@@ -20,6 +20,6 @@ class JqueryUIAsset extends AssetBundle
     ];
 
     public $depends = [
-        \yii\web\JqueryAsset::class,
+        JqueryAsset::class,
     ];
 }

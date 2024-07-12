@@ -1,6 +1,6 @@
 <?php
 
-namespace andy87\yii2\builder\components\models\settings;
+namespace andy87\yii2\builder\models\settings;
 
 /**
  * Class `FileSettings`
@@ -9,7 +9,7 @@ namespace andy87\yii2\builder\components\models\settings;
  *
  * @package andy87\yii2\builder\components\models
  */
-class FileSettings
+class GenerateFileSettings
 {
     public function __construct(
         public string $template,

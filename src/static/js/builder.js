@@ -80,10 +80,12 @@ let app = {
             data : this.typeField.TEXT,
         }
 
+
         setTimeout(function (){
             $( ".fieldFormsContainer" ).sortable({
                 connectWith: ".fieldFormsContainer"
             }).disableSelection();
+
         }, 2000);
     },
 
@@ -99,15 +101,33 @@ let app = {
 
             let dataName = 'data-name';
 
-            template.querySelectorAll(`[${dataName}]`).forEach(function (element)
+            template.querySelectorAll(`INPUT[${dataName}],SELECT[${dataName}]`).forEach(function (element)
             {
                 let attrName = element.getAttribute(`${dataName}`);
 
-                attrName = attrName.replace('GenerateFieldForm[0]', `GenerateFieldForm[${name}]`);
+                attrName = attrName.replace('[listFieldForm][0]', `[listFieldForm][${name}]`);
                 element.setAttribute('name', attrName);
                 element.removeAttribute(`${dataName}`);
-                if (element.hasAttribute('readonly')) {
+
+                if (element.classList.contains('input_name')) {
                     element.value = name;
+                    element.dataset.name = name;
+
+                    element.addEventListener('change', function ()
+                    {
+                        let newName = element.value;
+                        let oldName = element.dataset.name;
+
+                        element.dataset.name = newName;
+
+                        let inputs = document.querySelectorAll(`[name^="TableInfoForm[listFieldForm][${oldName}]"]`);
+
+                        inputs.forEach(function (input) {
+                            let newElementName = input.getAttribute('name').replace(oldName, newName);
+
+                            input.setAttribute('name', newElementName);
+                        });
+                    });
                 }
             });
 
@@ -165,10 +185,10 @@ let app = {
                         }
                     }
 
+                    let selector = null;
+
                     if (attrName.indexOf('[type]') !== -1 )
                     {
-                        let selector = null;
-
                         switch (type)
                         {
                             case app.typeField.FLOAT:
@@ -202,7 +222,7 @@ let app = {
                             case app.typeField.FOREIGN_KEY:
                                 selector = app.typeField.INTEGER;
 
-                                let lengthSelector = `GenerateFieldForm[${name}][length]`;
+                                let lengthSelector = `TableInfoForm[listFieldForm][${name}][length]`;
                                 let input = document.getElementsByName(lengthSelector);
                                 if (input.length) input[0].value = 8;
                                 break;

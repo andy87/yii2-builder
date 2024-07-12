@@ -25,7 +25,7 @@ class BaseModel extends Model
      */
     public function constructInput( string $type, string $attr, array $options = []): string
     {
-        $className = static::getClassName(static::class);
+        $className = $this->getClassName(static::class);
 
         $name = "{$className}[$attr]";
 
@@ -46,7 +46,7 @@ class BaseModel extends Model
      */
     public function constructActionButton(string $text, array $options = []): string
     {
-        $className = static::getClassName(static::class);
+        $className = $this->getClassName(static::class);
 
         $options = array_merge($options, [
             'name' => "{$className}[action]"
@@ -60,13 +60,13 @@ class BaseModel extends Model
      *
      * @return string
      */
-    protected static function getClassName( string $class ): string
+    protected function getClassName( string $class ): string
     {
-        if ( !isset(static::$className[$class]) ) {
+        if ( !isset(self::$className[$class]) ) {
             $className = explode('\\', $class);
-            static::$className[$class] = array_pop($className);
+            self::$className[$class] = array_pop($className);
         }
 
-        return static::$className[$class];
+        return self::$className[$class];
     }
 }

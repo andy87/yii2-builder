@@ -2,7 +2,11 @@
 
 use yii\web\View;
 use yii\bootstrap5\Accordion;
-use andy87\yii2\builder\components\{ Builder, assets\BuilderAsset, services\AccordionService };
+use andy87\yii2\builder\{Builder,
+    assets\BuilderAsset,
+    components\interfaces\ActionsInterface,
+    models\forms\TableForm,
+    services\AccordionService};
 
 /**
  * @var View $this
@@ -11,27 +15,35 @@ use andy87\yii2\builder\components\{ Builder, assets\BuilderAsset, services\Acco
 
 BuilderAsset::register($this);
 
-$blankGenerateTableForm = $generator->collectionGenerateTableForm->generateTableForm;
+$builderResources = $generator->builderResources;
+
+$blankGenerateTableForm = $builderResources->collectionTableInfo->newTableInfoForm;
 
 echo $this->render('_form/form', [
-    'generateTableForm' => $blankGenerateTableForm
+    'tableForm' => $blankGenerateTableForm
 ]);
 
 echo '<hr>';
 
-echo Accordion::widget([
-    'items' => AccordionService::getInstance()->getAccordionItems($generator->collectionGenerateTableForm)
-]);
+try {
+    echo Accordion::widget([
+        'items' => AccordionService::getInstance()->getAccordionItems($builderResources->collectionTableInfo->listTableInfoForms)
+    ]);
+
+} catch (Throwable $e) {
+
+    echo $e->getMessage();
+}
 
 echo '<br>';
 
-if (count($generator->collectionGenerateTableForm->listGenerateTableForm)) : ?>
+if (count($builderResources->collectionTableInfo->listTableInfoForms)) : ?>
     <div class="col-12" style="text-align: right">
 
         <?= $blankGenerateTableForm->constructActionButton('Сохранить', [
             'type' => 'submit',
             'class' => 'btn btn-success',
-            'value' => $blankGenerateTableForm::ACTION_ADD,
+            'value' => ActionsInterface::ACTION_ADD,
         ])?>
     </div>
 <?php endif; ?>

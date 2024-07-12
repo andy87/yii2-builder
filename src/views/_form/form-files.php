@@ -1,11 +1,11 @@
 <?php
 
 use yii\web\View;
-use andy87\yii2\builder\components\models\forms\GenerateTableForm;
+use andy87\yii2\builder\models\forms\TableForm;
 
 /**
  * @var View $this
- * @var GenerateTableForm $generateTableForm
+ * @var TableForm $tableForm
  */
 
 ?>
@@ -20,14 +20,14 @@ use andy87\yii2\builder\components\models\forms\GenerateTableForm;
             <th>Фильтр генерации файлов<br><small><i>Выделяются файлы - которые будут сгенерированы</i></small></th>
         </thead>
         <tbody>
-            <?php if (count($generateTableForm->listGenerateFileForm) ): ?>
-                <?php foreach ($generateTableForm->listGenerateFileForm as $file_id => $generateFileForm): ?>
+            <?php if (count($tableForm->listFileForm) ): ?>
+                <?php foreach ($tableForm->listFileForm as $file_id => $fileForm): ?>
                     <tr>
                         <td>
-                            <?= $generateFileForm->checkbox($generateFileForm, $generateTableForm->id)?>
+                            <?= $fileForm->checkbox($file_id, false, true )?>
                         </td>
                         <td>
-                            <?= $generateFileForm->path ?>
+                            <?= $fileForm->path ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

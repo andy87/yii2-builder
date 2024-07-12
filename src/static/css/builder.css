@@ -33,8 +33,8 @@
 }
 .tableRemoveRow.btn-svg SVG {
     width: 18px;
-    height: 18px;
+    height: 15px;
 }
 .ui-sortable-helper .tableRemoveRow.btn-svg {
-    float: left;
+    display: none;
 }

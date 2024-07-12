@@ -1,6 +1,6 @@
 <?php
 
-use andy87\yii2\builder\components\models\TableForm;
+use andy87\yii2\builder\models\TableForm;
 use yii\web\View;
 
 /**

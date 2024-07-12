@@ -1,17 +1,17 @@
 <?php declare(strict_types=1);
 
-namespace andy87\yii2\builder\components\services;
+namespace andy87\yii2\builder\services;
 
 use Yii;
 use Exception;
-use andy87\yii2\builder\components\Builder;
-use andy87\yii2\builder\components\models\collections\CollectionGenerateTableForm;
-use andy87\yii2\builder\components\models\forms\GenerateTableForm;
+use andy87\yii2\builder\Builder;
+use andy87\yii2\builder\models\forms\TableForm;
+use andy87\yii2\builder\models\collections\CollectionTableInfo;
 
 /**
  * Class AccordionService
  *
- * @package andy87\yii2\builder\components\services
+ * @package andy87\yii2\components\services
  */
 class AccordionService
 {
@@ -32,11 +32,11 @@ class AccordionService
     }
 
     /**
-     * @param CollectionGenerateTableForm $collectionGenerateTableForm
+     * @param CollectionTableInfo $collectionGenerateTableForm
      *
      * @return array
      */
-    public function getAccordionItems(CollectionGenerateTableForm $collectionGenerateTableForm): array
+    public function getAccordionItems(CollectionTableInfo $collectionGenerateTableForm): array
     {
         $accordionItems = [];
 
@@ -52,11 +52,11 @@ class AccordionService
     }
 
     /**
-     * @param GenerateTableForm $generateTableForm
+     * @param TableForm $generateTableForm
      *
      * @return string
      */
-    private function renderAccordionItem(GenerateTableForm $generateTableForm): string
+    private function renderAccordionItem(TableForm $generateTableForm): string
     {
         $templatePath = Yii::getAlias($this->view) . '/accordion-item.php';
 

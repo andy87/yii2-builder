@@ -1,6 +1,6 @@
 <?php
 
-namespace andy87\yii2\builder\components\assets;
+namespace andy87\yii2\builder\assets;
 
 use yii\web\AssetBundle;
 
@@ -11,7 +11,7 @@ use yii\web\AssetBundle;
  */
 class BuilderAsset extends AssetBundle
 {
-    public $sourcePath = __DIR__ . '/../../static';
+    public $sourcePath = __DIR__ . '/../static';
 
     public $css = [
         'css/builder.css',

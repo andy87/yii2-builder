@@ -1,6 +1,6 @@
 <?php
 
-namespace andy87\yii2\builder\components\models\settings;
+namespace andy87\yii2\builder\models\settings;
 
 use andy87\yii2\builder\components\base\BaseModel;
 use andy87\yii2\builder\components\helpers\Library;
@@ -8,9 +8,9 @@ use andy87\yii2\builder\components\helpers\Library;
 /**
  * Class GenerateFileSetting
  *
- * @package andy87\yii2\builder\components\models\settings
+ * @package andy87\yii2\builder\models\settings
  */
-class GenerateFileSetting extends BaseModel
+class FileFilterSettings extends BaseModel
 {
     /** @var string|int ID */
     public string|int $id = Library::COMMON_MODEL_SOURCES;

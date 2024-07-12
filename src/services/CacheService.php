@@ -1,17 +1,17 @@
 <?php declare(strict_types=1);
 
-namespace andy87\yii2\builder\components\services;
+namespace andy87\yii2\builder\services;
 
-use andy87\yii2\builder\components\Builder;
-use andy87\yii2\builder\components\models\settings\GenerateTableSetting;
+use andy87\yii2\components\Builder;
+use andy87\yii2\builder\models\settings\TableSetting;
 use Exception;
 use Yii;
-use andy87\yii2\builder\components\models\TableForm;
+use andy87\yii2\builder\models\TableForm;
 
 /**
  * Class CacheService
  *
- * @package andy87\yii2\builder\components\services
+ * @package andy87\yii2\components\services
  */
 class CacheService
 {
@@ -72,7 +72,7 @@ class CacheService
     /**
      * Return cache collection TableForm
      *
-     * @return GenerateTableSetting[]
+     * @return TableSetting[]
      */
     public function getListGenerateTableSettings(): array
     {
@@ -88,7 +88,7 @@ class CacheService
             {
                 $content = file_get_contents($path);
 
-                /** @var GenerateTableSetting $generateTableSettings */
+                /** @var TableSetting $generateTableSettings */
                 $generateTableSettings = unserialize($content);
 
                 $collectionGenerateTableSettings[$generateTableSettings->tableName] = $generateTableSettings;
@@ -110,13 +110,13 @@ class CacheService
 
 
     /**
-     * @param GenerateTableSetting $generateTableSetting
+     * @param TableSetting $generateTableSetting
      *
      * @return void
      */
-    private function create(GenerateTableSetting $generateTableSetting): void
+    private function create(TableSetting $generateTableSetting): void
     {
-        $generateTableSetting->id = $generateTableSetting->tableName;
+        $generateTableSetting->index = $generateTableSetting->tableName;
 
         $path = $this->cacheFilePath($generateTableSetting->tableName);
 
@@ -126,11 +126,11 @@ class CacheService
     }
 
     /**
-     * @param GenerateTableSetting $generateTableSetting
+     * @param TableSetting $generateTableSetting
      *
      * @return void
      */
-    private function update(GenerateTableSetting $generateTableSetting): void
+    private function update(TableSetting $generateTableSetting): void
     {
         $this->remove($generateTableSetting->tableName);
 
